@@ -4,6 +4,7 @@
 --  Cole o arquivo inteiro e clique em "Run".
 --  Pode rodar de novo sem medo: nada é apagado e nada é duplicado.
 --  As abas Tarefas, Ideias, Radar e Links úteis ficam em banco-novas-abas.sql.
+--  O tipo "Particular" do calendário fica em banco-calendario-particular.sql.
 -- =====================================================================
 
 
@@ -65,7 +66,7 @@ create table if not exists public.calendario (
   titulo     text not null,
   marca      text,
   tipo       text not null default 'gravar'
-             check (tipo in ('gravar', 'editar', 'postar')),
+             check (tipo in ('gravar', 'editar', 'postar', 'particular')),
   data       date not null,
   status     text not null default 'a fazer'
              check (status in ('a fazer', 'feito')),
@@ -108,6 +109,12 @@ create table if not exists public.visitas (
   pagina  text,
   origem  text
 );
+
+-- Atualização: o calendário aceita também o tipo "particular"
+-- (vale pra quem já tinha criado a tabela antes dessa mudança).
+alter table public.calendario drop constraint if exists calendario_tipo_check;
+alter table public.calendario add constraint calendario_tipo_check
+  check (tipo in ('gravar', 'editar', 'postar', 'particular'));
 
 create index if not exists visitas_data_idx on public.visitas (data desc);
 create index if not exists videos_ordem_idx on public.videos (ordem);
