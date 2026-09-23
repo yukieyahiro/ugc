@@ -3,6 +3,7 @@
 --  Onde colar: Supabase > seu projeto > SQL Editor > New query.
 --  Cole o arquivo inteiro e clique em "Run".
 --  Pode rodar de novo sem medo: nada é apagado e nada é duplicado.
+--  As abas Tarefas, Ideias, Radar e Links úteis ficam em banco-novas-abas.sql.
 -- =====================================================================
 
 
