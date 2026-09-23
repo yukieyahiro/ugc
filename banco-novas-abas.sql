@@ -118,6 +118,6 @@ select 'EXEMPLO · Novidade que eu vi hoje', 'Tendência',
 where not exists (select 1 from public.radar);
 
 insert into public.links (titulo, url, categoria, descricao)
-select 'EXEMPLO · Meu portfólio', 'https://yukieyahiro.github.io/ugc/editor/', 'Ferramentas',
+select 'EXEMPLO · Meu portfólio', 'https://yukieyahiro.github.io/ugc/', 'Ferramentas',
        'Linha de exemplo. Pode editar ou apagar.'
 where not exists (select 1 from public.links);
