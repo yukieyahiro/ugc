@@ -349,6 +349,66 @@ input.filtro{padding:0 8px}
 .link-li a:hover{text-decoration:underline}
 .link-li small{display:block;color:var(--muted);font-size:.76rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
+/* ============ ROTEIROS (transcrições) ============ */
+.rot-topo{padding:14px}
+.rot-linha{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.rot-linha input{flex:1 1 280px;min-width:0;border:1px solid var(--line);background:var(--bg);border-radius:var(--radius-xs);min-height:40px;padding:0 12px;font-size:.88rem}
+.rot-linha input:focus{outline:none;border-color:var(--ink);background:#fff;box-shadow:0 0 0 3px var(--lime)}
+.rot-linha select.filtro{min-height:40px}
+.rot-linha .btn{min-height:40px}
+.rot-aviso{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin-top:12px;border-radius:var(--radius-sm);padding:10px 12px;font-weight:600;font-size:.86rem}
+.rot-aviso.info{background:var(--azul-bg);color:var(--azul)}
+.rot-aviso.ok{background:var(--lime-soft);color:#2f4200}
+.rot-aviso.erro{background:var(--verm-bg);color:var(--verm)}
+.rot-aviso .btn{min-height:30px}
+.rot-config{margin-bottom:16px;overflow:hidden}
+.rot-config > summary{list-style:none;cursor:pointer;display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;padding:12px 18px;font-weight:800;font-size:.88rem}
+.rot-config > summary::-webkit-details-marker{display:none}
+.rot-config > summary .fraco{font-weight:600;font-size:.8rem;color:var(--muted)}
+.rot-saldo{margin-left:auto;font-size:.78rem;font-weight:800;background:var(--lime-soft);border-radius:999px;padding:2px 10px}
+.rot-saldo:empty{display:none}
+.rot-config-corpo{padding:0 18px 16px;display:grid;gap:10px}
+.rot-config-corpo p{font-size:.84rem}
+.rot-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.chip-rot{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:5px 12px;font-weight:700;font-size:.8rem;cursor:pointer;color:var(--muted)}
+.chip-rot[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.rot-lista{display:grid;gap:12px}
+.rot-card{display:grid;grid-template-columns:150px 1fr;gap:16px;border:1px solid var(--line);border-radius:var(--radius);padding:12px;background:var(--card);box-shadow:var(--shadow-sm)}
+.rot-capa{position:relative;aspect-ratio:9/16;border-radius:var(--radius-sm);overflow:hidden;display:grid;place-items:center;background:linear-gradient(170deg,#30352c,#56643f 60%,#9fb85a)}
+.fonte-tiktok .rot-capa{background:linear-gradient(170deg,#1d1d22,#3b3450 60%,#8a78c9)}
+.fonte-youtube .rot-capa{background:linear-gradient(170deg,#2c2222,#6b3a3a 60%,#c98a78)}
+.fonte-manual .rot-capa{background:linear-gradient(170deg,#eceee8,#cfd3c9)}
+.rot-capa iframe{position:absolute;inset:0;width:100%;height:100%;border:0;background:#000}
+.rot-fonte-emo{position:absolute;top:8px;left:8px;background:rgba(255,255,255,.92);border-radius:8px;padding:1px 6px;font-size:.9rem}
+.rot-play{border:0;background:var(--lime);color:var(--ink);font-weight:800;font-size:.8rem;border-radius:999px;padding:8px 14px;cursor:pointer;text-decoration:none;box-shadow:0 8px 20px rgba(0,0,0,.3)}
+.rot-play.sem{background:none;box-shadow:none;font-size:2rem}
+.rot-info{min-width:0;display:flex;flex-direction:column;gap:6px}
+.rot-cab{display:flex;align-items:flex-start;gap:8px}
+.rot-cab h3{font-size:.95rem;font-weight:800;line-height:1.3;flex:1;min-width:0}
+.rot-meta{font-size:.78rem;color:var(--muted);font-weight:600}
+.rot-tags{display:flex;flex-wrap:wrap;gap:4px}
+.rot-trecho{font-size:.84rem;color:#2b2e2a;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;background:var(--bg);border-radius:var(--radius-xs);padding:8px 10px}
+.rot-status,.rot-falhou{display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:.82rem;font-weight:700;border-radius:var(--radius-xs);padding:7px 10px}
+.rot-status{background:var(--azul-bg);color:var(--azul)}
+.rot-falhou{background:var(--verm-bg);color:var(--verm)}
+.rot-status .btn,.rot-falhou .btn{min-height:28px;font-size:.76rem}
+.relogio{width:15px;height:15px;border:2px solid currentColor;border-radius:50%;position:relative;flex:none}
+.relogio::before,.relogio::after{content:"";position:absolute;left:50%;top:50%;width:2px;background:currentColor;border-radius:2px;transform-origin:50% 0}
+.relogio::before{height:5px;animation:ponteiro 1.2s linear infinite}
+.relogio::after{height:3.5px;animation:ponteiro 14s linear infinite}
+@keyframes ponteiro{from{transform:translateX(-50%) rotate(180deg)}to{transform:translateX(-50%) rotate(540deg)}}
+.rot-acoes{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto}
+.rot-acoes .btn{min-height:30px;font-size:.78rem}
+@media (max-width:700px){
+  .rot-linha{flex-direction:column;align-items:stretch}
+  .rot-linha input,.rot-linha select.filtro,.rot-linha .btn{width:100%;flex:none}
+  .rot-card{grid-template-columns:92px 1fr;gap:12px;padding:10px}
+  .rot-card.com-video{grid-template-columns:1fr}
+  .rot-card.com-video .rot-capa{max-width:320px;width:100%;margin:0 auto}
+  .rot-play{font-size:.7rem;padding:6px 9px}
+}
+@media (prefers-reduced-motion:reduce){.relogio::before,.relogio::after{animation:none}}
+
 /* ============ JANELA (MODAL) ============ */
 .fundo-modal{position:fixed;inset:0;z-index:80;background:rgba(17,17,17,.45);display:grid;place-items:center;padding:16px}
 .modal{width:100%;max-width:520px;max-height:calc(100vh - 32px);overflow-y:auto;background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px}
@@ -396,6 +456,7 @@ input.filtro{padding:0 8px}
       <a href="#checklist" data-aba="checklist"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="3"/><path d="M8 9l2 2 4-4M8 15h8"/></svg>Checklist</a>
       <p class="grupo">ferramentas</p>
       <a href="#ideias" data-aba="ideias"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2V16h5v-.1c0-.8.4-1.5 1-2A6 6 0 0 0 12 3z"/></svg>Ideias</a>
+      <a href="#roteiros" data-aba="roteiros"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h8l4 4v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M15 3v4h4M9 12h6M9 16h6"/></svg>Roteiros</a>
       <a href="#radar" data-aba="radar"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 12l6-6"/></svg>Radar de novidades</a>
       <a href="#links" data-aba="links"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>Links úteis</a>
     </nav>
@@ -429,6 +490,7 @@ input.filtro{padding:0 8px}
     <section id="aba-ideias" class="aba" hidden></section>
     <section id="aba-radar" class="aba" hidden></section>
     <section id="aba-links" class="aba" hidden></section>
+    <section id="aba-roteiros" class="aba" hidden></section>
   </main>
 </div>
 
@@ -483,7 +545,8 @@ var ABAS = {
   tarefas: { titulo: "Tarefas", sub: "Sua lista de afazeres", carregar: carregaTarefas },
   ideias: { titulo: "Ideias", sub: "Da ideia até o post", carregar: carregaIdeias },
   radar: { titulo: "Radar de novidades", sub: "Tendências, áudios, novidades das plataformas e oportunidades", carregar: carregaRadar },
-  links: { titulo: "Links úteis", sub: "Os sites que você usa no trabalho", carregar: carregaLinks }
+  links: { titulo: "Links úteis", sub: "Os sites que você usa no trabalho", carregar: carregaLinks },
+  roteiros: { titulo: "📜 Roteiros", sub: "Cole o link de um reel e eu transcrevo. Serve pros seus e pros das outras, com etiqueta pra você separar.", carregar: carregaRoteirosAba }
 };
 
 /* ---------- utilidades ---------- */
@@ -535,7 +598,7 @@ function avisa(texto, tipo) {
   $("#avisos").appendChild(d);
 }
 var TABELAS_NOVAS = ["tarefas", "ideias", "radar", "links"];
-function arquivoSql(tabela) { return TABELAS_NOVAS.indexOf(tabela) > -1 ? "banco-novas-abas.sql" : "banco.sql"; }
+function arquivoSql(tabela) { if (tabela === "roteiros" || tabela === "configuracoes") return "sql-roteiros.sql"; return TABELAS_NOVAS.indexOf(tabela) > -1 ? "banco-novas-abas.sql" : "banco.sql"; }
 function explicaErro(tabela, erro) {
   var c = (erro && erro.code) || "", m = (erro && (erro.message || String(erro))) || "";
   if (/jwt|token.*expired|not authenticated/i.test(m)) { location.replace("../login/"); return ""; }
@@ -663,7 +726,7 @@ function formulario(op) {
           return '<option value="' + esc(ov) + '"' + (String(val == null ? "" : val) === String(ov) ? " selected" : "") + ">" + esc(ot) + "</option>";
         }).join("") + "</select>";
       } else if (c.tipo === "textarea") {
-        html += '<textarea id="' + id + '" name="' + c.nome + '" placeholder="' + esc(c.dica || "") + '">' + esc(val == null ? "" : val) + "</textarea>";
+        html += '<textarea id="' + id + '" name="' + c.nome + '"' + (c.alto ? ' style="min-height:260px"' : "") + ' placeholder="' + esc(c.dica || "") + '">' + esc(val == null ? "" : val) + "</textarea>";
       } else {
         html += '<input id="' + id + '" name="' + c.nome + '" type="' + (c.tipo || "text") + '"' + (c.passo ? ' step="' + c.passo + '"' : "") + (c.tipo === "number" ? ' min="0" inputmode="decimal"' : "") +
           ' value="' + esc(val == null ? "" : val) + '" placeholder="' + esc(c.dica || "") + '">';
@@ -698,7 +761,7 @@ function formulario(op) {
       Promise.resolve(op.aoApagar()).then(function (ok) { if (ok !== false) fechaModal(); });
     });
   }
-  abreModal({ titulo: op.titulo, sub: op.sub, corpo: form });
+  abreModal({ titulo: op.titulo, sub: op.sub, corpo: form, largo: op.largo });
 }
 
 /* ---------- navegação entre abas ---------- */
@@ -1987,6 +2050,429 @@ function editaLink(l) {
     },
     aoApagar: l ? function () { return apaga("links", l.id).then(function (ok) { if (ok) carregaLinks(); return ok; }); } : null
   });
+}
+
+/* =========================================================
+   ABA ROTEIROS: transcrição de vídeos pela Supadata
+   A chave da Supadata NÃO fica no código: você cola na aba e ela
+   é guardada na tabela "configuracoes" do seu Supabase (trancada).
+   ========================================================= */
+var SUPADATA = "https://api.supadata.ai/v1";
+var CHAVE_CONFIG = "supadata_key";
+var MSG_VAZIO = "Não achei fala nesse vídeo. Costuma ser reel só com música ou só com texto na tela.";
+var MSG_SEM_CHAVE = "Pra transcrever, falta a sua chave da Supadata. É grátis: crie uma conta em supadata.ai (100 créditos por mês, sem cartão), copie a sua API key e cole no campo 🔑 Chave da Supadata aqui embaixo.";
+var MSG_LINK = "Esse link não parece de um vídeo. Copie o link do reel, do TikTok ou do YouTube (começando com https://) e cole de novo.";
+var FONTES_ROT = { instagram: ["📸", "Instagram"], tiktok: ["🎵", "TikTok"], youtube: ["▶️", "YouTube"], manual: ["✍️", "Escrito na mão"] };
+var rot = { lista: [], chave: "", filtro: "todos", busca: "", rodando: {} };
+
+function novoId() {
+  if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) { var r = Math.random() * 16 | 0; return (c === "x" ? r : (r & 3 | 8)).toString(16); });
+}
+function espera(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+
+/* Limpa o link: /reels/ vira /reel/, tira ?igsh= e utm_. Devolve null se não for link. */
+function limpaLink(bruto) {
+  var u = String(bruto || "").trim();
+  if (!u) return null;
+  if (!/^https?:\/\//i.test(u)) {
+    if (/^(www\.|m\.|vm\.|vt\.)?(instagram\.com|tiktok\.com|youtube\.com|youtu\.be)\//i.test(u)) u = "https://" + u;
+    else return null;
+  }
+  var x;
+  try { x = new URL(u); } catch (e) { return null; }
+  if (!/\./.test(x.hostname)) return null;
+  x.hash = "";
+  x.pathname = x.pathname.replace(/\/reels\//i, "/reel/");
+  var tira = [];
+  x.searchParams.forEach(function (v, k) { if (/^utm_/i.test(k) || /^igsh/i.test(k) || k === "igshid") tira.push(k); });
+  tira.forEach(function (k) { x.searchParams.delete(k); });
+  if (/instagram\.com$/i.test(x.hostname)) x.search = "";
+  return x.toString();
+}
+function infoLink(u) {
+  var r = { fonte: "manual", perfil: "", embed: "" };
+  var x; try { x = new URL(u); } catch (e) { return r; }
+  var h = x.hostname.replace(/^(www|m)\./, ""), p = x.pathname, m;
+  if (/instagram\.com$/.test(h)) {
+    r.fonte = "instagram";
+    m = p.match(/^\/([A-Za-z0-9._]+)\/(reel|p|tv)\//); if (m && ["reel", "p", "tv", "stories", "explore"].indexOf(m[1]) < 0) r.perfil = m[1];
+    m = p.match(/\/(reel|p|tv)\/([A-Za-z0-9_-]+)/); if (m) r.embed = "https://www.instagram.com/" + (m[1] === "p" ? "p" : "reel") + "/" + m[2] + "/embed";
+  } else if (/tiktok\.com$/.test(h)) {
+    r.fonte = "tiktok";
+    m = p.match(/^\/@([A-Za-z0-9._-]+)/); if (m) r.perfil = m[1];
+    m = p.match(/\/video\/(\d+)/); if (m) r.embed = "https://www.tiktok.com/embed/v2/" + m[1];
+  } else if (/youtube\.com$|youtu\.be$/.test(h)) {
+    r.fonte = "youtube";
+    var id = "";
+    if (/youtu\.be$/.test(h)) id = p.split("/")[1] || "";
+    else if ((m = p.match(/\/(shorts|embed|live)\/([A-Za-z0-9_-]+)/))) id = m[2];
+    else id = x.searchParams.get("v") || "";
+    m = p.match(/^\/@([A-Za-z0-9._-]+)/); if (m) r.perfil = m[1];
+    if (id) r.embed = "https://www.youtube.com/embed/" + encodeURIComponent(id);
+  }
+  return r;
+}
+
+/* ---------- conversa com a Supadata ---------- */
+function traduzSupadata(status, corpo) {
+  corpo = corpo || {};
+  var cod = String(corpo.error || corpo.code || ""), det = String(corpo.details || "") + " " + String(corpo.message || "");
+  if (status === 401 || status === 403 || cod === "unauthorized") return { tipo: "chave", msg: "A sua chave da Supadata não foi aceita. Confira se copiou ela inteira e salve de novo no campo 🔑 Chave da Supadata." };
+  if (cod === "limit-exceeded" || status === 429) {
+    if (/plan usage/i.test(det)) return { tipo: "cota", msg: "Os seus créditos da Supadata deste mês acabaram. Eles voltam no próximo mês. Até lá, dá pra usar o + Escrever na mão." };
+    return { tipo: "pressa", msg: "Foram muitos pedidos seguidos. É só esperar 1 minutinho e tentar de novo." };
+  }
+  if (status === 206 || cod === "transcript-unavailable") return { tipo: "vazio", msg: MSG_VAZIO };
+  if (cod === "upgrade-required") return { tipo: "plano", msg: "Esse tipo de vídeo não é liberado no plano grátis da Supadata." };
+  if (status === 404 || cod === "not-found") return { tipo: "video", msg: "Não consegui abrir esse vídeo. Ele pode ser privado, ter sido apagado ou o link está incompleto." };
+  if (status === 400 || cod === "invalid-request") return { tipo: "video", msg: "Não consegui abrir esse vídeo. Confira se o link está completo e se o vídeo é público." };
+  return { tipo: "outro", msg: "O serviço de transcrição teve um probleminha agora. Tenta de novo daqui a pouco." };
+}
+function textoDe(corpo) {
+  var c = corpo && corpo.content;
+  if (Array.isArray(c)) return { texto: c.map(function (s) { return (s && s.text) || ""; }).join(" ").replace(/\s+/g, " ").trim(), segmentos: c };
+  return { texto: String(c == null ? "" : c).trim(), segmentos: null };
+}
+async function chamaSupadata(link, chave) {
+  var inicio = Date.now(), LIMITE = 6 * 60 * 1000;
+  var ctrl = new AbortController(), relogio = setTimeout(function () { ctrl.abort(); }, LIMITE);
+  function fim(c) {
+    var t = textoDe(c);
+    if (!t.texto || c.lang === "none") return { vazio: true };
+    return { texto: t.texto, segmentos: t.segmentos };
+  }
+  try {
+    var qs = new URLSearchParams({ url: link, mode: "auto", text: "true", lang: "pt" });
+    var r = await fetch(SUPADATA + "/transcript?" + qs.toString(), { headers: { "x-api-key": chave }, signal: ctrl.signal });
+    var corpo = await r.json().catch(function () { return {}; });
+    if (r.status === 202 && corpo.jobId) {
+      while (Date.now() - inicio < LIMITE) {
+        await espera(5000);
+        var r2 = await fetch(SUPADATA + "/transcript/" + encodeURIComponent(corpo.jobId), { headers: { "x-api-key": chave }, signal: ctrl.signal });
+        var c2 = await r2.json().catch(function () { return {}; });
+        if (!r2.ok) return { erro: traduzSupadata(r2.status, c2) };
+        if (c2.status === "completed") return fim(c2);
+        if (c2.status === "failed") return { erro: traduzSupadata(0, typeof c2.error === "object" ? c2.error : { error: c2.error, details: c2.details }) };
+      }
+      return { erro: { tipo: "tempo", msg: "Demorou demais e eu parei de esperar. Tenta de novo daqui a pouco." } };
+    }
+    if (r.status === 200) return fim(corpo);
+    var e = traduzSupadata(r.status, corpo);
+    return e.tipo === "vazio" ? { vazio: true } : { erro: e };
+  } catch (err) {
+    if (err && err.name === "AbortError") return { erro: { tipo: "tempo", msg: "Demorou demais e eu parei de esperar. Tenta de novo daqui a pouco." } };
+    return { erro: { tipo: "rede", msg: "Não consegui falar com o serviço de transcrição. Confira a internet e tente de novo." } };
+  } finally { clearTimeout(relogio); }
+}
+function atualizaSaldo() {
+  var alvo = $("#rot-saldo"); if (!alvo) return;
+  if (!rot.chave) { alvo.textContent = ""; return; }
+  alvo.textContent = "conferindo saldo...";
+  fetch(SUPADATA + "/me", { headers: { "x-api-key": rot.chave } }).then(function (r) {
+    return r.json().catch(function () { return {}; }).then(function (c) { return { ok: r.ok, status: r.status, c: c }; });
+  }).then(function (x) {
+    if (!x.ok) { alvo.textContent = x.status === 401 ? "chave não aceita" : ""; return; }
+    var usados = numero(x.c.usedCredits), max = numero(x.c.maxCredits);
+    alvo.textContent = max ? usados + " de " + max + " créditos usados" : "";
+  }).catch(function () { alvo.textContent = ""; });
+}
+
+/* ---------- avisos da aba ---------- */
+function avisoRot(tipo, texto, botoes) {
+  var el = $("#rot-aviso"); if (!el) return;
+  if (!texto) { el.hidden = true; el.innerHTML = ""; return; }
+  el.hidden = false;
+  el.className = "rot-aviso " + (tipo || "info");
+  el.innerHTML = "<span>" + esc(texto) + "</span>" + (botoes || []).map(function (b, i) { return '<button type="button" class="btn" data-b="' + i + '">' + esc(b[0]) + "</button>"; }).join("");
+  $$("[data-b]", el).forEach(function (btn) { btn.addEventListener("click", function () { botoes[+btn.dataset.b][1](); }); });
+}
+
+/* ---------- carregar a aba ---------- */
+function carregaRoteirosAba() {
+  var s = $("#aba-roteiros");
+  if (!s.dataset.pronto) {
+    s.dataset.pronto = "1";
+    s.innerHTML =
+      '<div class="card bloco rot-topo">' +
+      '<div class="rot-linha">' +
+      '<label class="sr-only" for="rot-link">Link do vídeo</label><input id="rot-link" type="url" inputmode="url" autocomplete="off" placeholder="Cole aqui: instagram.com/reel/... · tiktok.com/... · youtube.com/...">' +
+      '<label class="sr-only" for="rot-dequem">De quem é o vídeo</label><select id="rot-dequem" class="filtro"><option value="outra">👀 De outra pessoa</option><option value="minha">⭐ Meu</option></select>' +
+      '<button type="button" class="btn escuro" id="rot-transcrever">🎧 Transcrever</button>' +
+      '<button type="button" class="btn" id="rot-manual">✍️ + Escrever na mão</button></div>' +
+      '<div id="rot-aviso" class="rot-aviso" role="status" aria-live="polite" hidden></div></div>' +
+      '<details class="card rot-config" id="rot-config"><summary><span>🔑 Chave da Supadata</span><span class="fraco" id="rot-chave-status">carregando...</span><span class="rot-saldo" id="rot-saldo"></span></summary>' +
+      '<div class="rot-config-corpo"><p class="fraco">Crie uma conta grátis em <a href="https://supadata.ai" target="_blank" rel="noopener">supadata.ai</a> (100 créditos por mês, sem cartão; cada vídeo gasta uns 2), copie a sua API key e cole aqui. Ela fica guardada só no seu banco, trancada.</p>' +
+      '<div class="rot-linha"><label class="sr-only" for="rot-chave">Chave da Supadata</label><input id="rot-chave" type="password" autocomplete="off" placeholder="Cole aqui a sua API key">' +
+      '<button type="button" class="btn escuro" id="rot-salvar-chave">💾 Salvar chave</button></div></div></details>' +
+      '<div class="card bloco"><div class="bloco-topo"><h2>📚 Biblioteca</h2>' +
+      '<label class="campo-busca">' + icone("busca") + '<span class="sr-only">Buscar roteiro</span><input type="search" id="rot-busca" placeholder="Buscar no texto, perfil, título ou notas"></label>' +
+      '<div class="dir"><button type="button" class="btn" id="rot-estudar">🧠 Estudar com o Claude</button></div></div>' +
+      '<div class="rot-chips" id="rot-chips" role="group" aria-label="Filtrar roteiros"></div>' +
+      '<div id="rot-lista"><p class="vazio">Carregando...</p></div></div>';
+
+    $("#rot-transcrever").addEventListener("click", function () { transcrever(null); });
+    $("#rot-link").addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); transcrever(null); } });
+    $("#rot-manual").addEventListener("click", function () {
+      var l = limpaLink($("#rot-link").value);
+      editaRoteiro(null, { url: l || "", de_quem: $("#rot-dequem").value, perfil: l ? infoLink(l).perfil : "" });
+    });
+    $("#rot-salvar-chave").addEventListener("click", salvaChave);
+    $("#rot-chave").addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); salvaChave(); } });
+    $("#rot-busca").addEventListener("input", function () { rot.busca = this.value; desenhaBiblioteca(); });
+    $("#rot-chips").addEventListener("click", function (e) {
+      var b = e.target.closest("[data-chip]"); if (!b) return;
+      rot.filtro = b.dataset.chip; desenhaBiblioteca();
+    });
+    $("#rot-estudar").addEventListener("click", estudarComClaude);
+    $("#rot-lista").addEventListener("click", cliqueBiblioteca);
+  }
+  Promise.all([
+    busca("roteiros", function (q) { return q.order("created_at", { ascending: false }); }),
+    busca("configuracoes", function (q) { return q.eq("chave", CHAVE_CONFIG); })
+  ]).then(seguro("roteiros", function (r) {
+    rot.lista = r[0].dados; E.ok.roteiros = r[0].ok;
+    confereCampos("roteiros", rot.lista, ["fonte", "url", "perfil", "de_quem", "titulo", "transcricao", "legenda", "postado_em", "tags", "obs", "status", "erro"]);
+    var cfg = r[1].dados[0];
+    rot.chave = (cfg && cfg.valor) || "";
+    E.ok.configuracoes = r[1].ok;
+    mostraChave();
+    desenhaBiblioteca();
+  }));
+}
+function mostraChave() {
+  var st = $("#rot-chave-status"); if (!st) return;
+  if (!E.ok.configuracoes) { st.textContent = "não consegui ler"; return; }
+  if (rot.chave) { st.textContent = "salva ••••" + rot.chave.slice(-4); $("#rot-config").open = false; }
+  else { st.textContent = "ainda não salva"; $("#rot-config").open = true; }
+  atualizaSaldo();
+}
+function salvaChave() {
+  var v = $("#rot-chave").value.trim();
+  if (!v) { toast("Cole a chave no campo primeiro"); $("#rot-chave").focus(); return; }
+  grava("configuracoes", banco.from("configuracoes").upsert({ chave: CHAVE_CONFIG, valor: v, updated_at: new Date().toISOString() })).then(function (ok) {
+    if (!ok) return;
+    rot.chave = v; $("#rot-chave").value = ""; toast("Chave salva ✓");
+    avisoRot("", ""); mostraChave();
+  });
+}
+
+/* ---------- biblioteca ---------- */
+function desenhaBiblioteca() {
+  var alvo = $("#rot-lista"); if (!alvo) return;
+  var tags = [];
+  rot.lista.forEach(function (r) { (r.tags || []).forEach(function (t) { if (t && tags.indexOf(t) < 0) tags.push(t); }); });
+  tags.sort(function (a, b) { return a.localeCompare(b, "pt-BR"); });
+  if (rot.filtro.indexOf("tag:") === 0 && tags.indexOf(rot.filtro.slice(4)) < 0) rot.filtro = "todos";
+  $("#rot-chips").innerHTML = [["todos", "Todos"], ["minha", "⭐ Meus"], ["outra", "👀 De outras"]].concat(tags.map(function (t) { return ["tag:" + t, "#" + t]; }))
+    .map(function (c) { return '<button type="button" class="chip-rot" data-chip="' + esc(c[0]) + '" aria-pressed="' + (rot.filtro === c[0]) + '">' + esc(c[1]) + "</button>"; }).join("");
+
+  if (!E.ok.roteiros) { alvo.innerHTML = '<p class="vazio">Não consegui carregar a biblioteca. Veja o aviso no topo.</p>'; return; }
+  var t = rot.busca.trim().toLowerCase();
+  var lista = rot.lista.filter(function (r) {
+    if (rot.filtro === "minha" || rot.filtro === "outra") { if ((r.de_quem || "outra") !== rot.filtro) return false; }
+    else if (rot.filtro.indexOf("tag:") === 0 && (r.tags || []).indexOf(rot.filtro.slice(4)) < 0) return false;
+    return !t || [r.transcricao, r.perfil, r.titulo, r.obs, r.legenda].some(function (x) { return String(x || "").toLowerCase().indexOf(t) > -1; });
+  });
+  if (!rot.lista.length) { alvo.innerHTML = '<p class="vazio">📭 Sua biblioteca está vazia. Cole o link de um reel lá em cima e clique em 🎧 Transcrever.</p>'; return; }
+  if (!lista.length) { alvo.innerHTML = '<p class="vazio">Nada encontrado com esse filtro.</p>'; return; }
+  alvo.innerHTML = '<div class="rot-lista">' + lista.map(cardRoteiro).join("") + "</div>";
+}
+function cardRoteiro(r) {
+  var fonte = FONTES_ROT[r.fonte] || FONTES_ROT.manual;
+  var inf = r.url ? infoLink(r.url) : { embed: "" };
+  var link = urlSegura(r.url);
+  var meu = r.de_quem === "minha";
+  var capa = inf.embed ? '<button type="button" class="rot-play" data-ver>▶ ver vídeo</button>'
+    : link ? '<a class="rot-play" href="' + esc(link) + '" target="_blank" rel="noopener">↗ abrir vídeo</a>'
+    : '<span class="rot-play sem">✍️</span>';
+  var status = "";
+  if (r.status === "processando") {
+    status = rot.rodando[r.id]
+      ? '<p class="rot-status"><span class="relogio" aria-hidden="true"></span>Transcrevendo agora...</p>'
+      : '<p class="rot-status"><span class="relogio" aria-hidden="true"></span>Parou no meio da transcrição. <button type="button" class="btn" data-tentar>🔁 tentar de novo</button></p>';
+  } else if (r.status === "falhou") {
+    status = '<p class="rot-falhou">⚠️ ' + esc(r.erro || "Não deu certo.") + ' <button type="button" class="btn" data-abrir>📂 abrir mesmo assim</button></p>';
+  }
+  var data = r.postado_em ? fmtData(r.postado_em) : (r.created_at ? fmtData(isoLocal(new Date(r.created_at))) : "");
+  return '<article class="rot-card fonte-' + esc(r.fonte || "manual") + '" data-id="' + esc(r.id) + '">' +
+    '<div class="rot-capa" data-embed="' + esc(inf.embed) + '"><span class="rot-fonte-emo" aria-hidden="true">' + fonte[0] + "</span>" + capa + "</div>" +
+    '<div class="rot-info"><div class="rot-cab"><h3>' + esc(r.titulo || "Sem título") + "</h3>" +
+    '<span class="pilula ' + (meu ? "p-lima" : "p-lilas") + '">' + (meu ? "⭐ Meu" : "👀 De outra") + "</span></div>" +
+    '<p class="rot-meta">' + [r.perfil ? "@" + esc(String(r.perfil).replace(/^@/, "")) : "", fonte[0] + " " + fonte[1], data].filter(Boolean).join(" · ") + "</p>" +
+    ((r.tags && r.tags.length) ? '<div class="rot-tags">' + r.tags.map(function (t) { return '<span class="pilula p-cinza">#' + esc(t) + "</span>"; }).join("") + "</div>" : "") +
+    status +
+    (r.transcricao ? '<p class="rot-trecho">' + esc(r.transcricao) + "</p>" : "") +
+    '<div class="rot-acoes">' + (r.transcricao ? '<button type="button" class="btn" data-copiar>📋 Copiar transcrição</button>' : "") +
+    '<button type="button" class="btn" data-editar>✏️ Editar</button><button type="button" class="btn perigo" data-apagar>🗑️ Apagar</button></div></div></article>';
+}
+function copiaTexto(texto) {
+  if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(texto);
+  return new Promise(function (ok, falha) {
+    var ta = document.createElement("textarea"); ta.value = texto; ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy") ? ok() : falha(); } catch (e) { falha(e); } finally { ta.remove(); }
+  });
+}
+function cliqueBiblioteca(e) {
+  var card = e.target.closest(".rot-card"); if (!card) return;
+  var r = rot.lista.find(function (x) { return String(x.id) === card.dataset.id; }); if (!r) return;
+  if (e.target.closest("[data-ver]")) {
+    var capa = $(".rot-capa", card), src = capa.dataset.embed;
+    if (!src) return;
+    capa.innerHTML = '<iframe src="' + esc(src) + '" title="Vídeo: ' + esc(r.titulo || "sem título") + '" allow="autoplay; encrypted-media; picture-in-picture; clipboard-write" allowfullscreen loading="lazy"></iframe>';
+    card.classList.add("com-video");
+  } else if (e.target.closest("[data-copiar]")) {
+    var b = e.target.closest("[data-copiar]");
+    copiaTexto(r.transcricao || "").then(function () {
+      b.textContent = "copiado ✓"; setTimeout(function () { b.textContent = "📋 Copiar transcrição"; }, 2000);
+    }).catch(function () { toast("Não consegui copiar. Abra em Editar e copie de lá."); });
+  } else if (e.target.closest("[data-editar]") || e.target.closest("[data-abrir]")) {
+    if (rot.rodando[r.id]) { toast("Espera terminar de transcrever"); return; }
+    editaRoteiro(r);
+  } else if (e.target.closest("[data-tentar]")) {
+    transcrever(r.id);
+  } else if (e.target.closest("[data-apagar]")) {
+    if (!confirm('Apagar "' + (r.titulo || "Sem título") + '" da biblioteca? Não dá para desfazer.')) return;
+    apaga("roteiros", r.id).then(function (ok) { if (ok) { rot.lista = rot.lista.filter(function (x) { return x !== r; }); desenhaBiblioteca(); } });
+  }
+}
+
+/* ---------- editar / escrever na mão ---------- */
+function editaRoteiro(r, padrao, aviso) {
+  var v = r ? Object.assign({}, r) : Object.assign({ de_quem: "outra" }, padrao || {});
+  v.tags = (v.tags || []).join(", ");
+  formulario({
+    titulo: r ? "✏️ Editar roteiro" : "✍️ Escrever roteiro na mão",
+    sub: aviso || "",
+    largo: true,
+    valores: v,
+    campos: [
+      { nome: "titulo", rotulo: "Título", inteiro: true, dica: "Dê um nome pra achar depois" },
+      { nome: "de_quem", rotulo: "De quem", tipo: "select", opcoes: [["outra", "👀 De outra"], ["minha", "⭐ Meu"]] },
+      { nome: "perfil", rotulo: "Perfil", dica: "@perfil" },
+      { nome: "url", rotulo: "Link", tipo: "url", vazioNulo: true, dica: "https://..." },
+      { nome: "postado_em", rotulo: "Data de postagem", tipo: "date" },
+      { nome: "tags", rotulo: "Tags (separadas por vírgula)", inteiro: true, dica: "skincare, gancho bom, rotina" },
+      { nome: "legenda", rotulo: "Legenda do post", tipo: "textarea" },
+      { nome: "transcricao", rotulo: "Transcrição", tipo: "textarea", alto: true },
+      { nome: "obs", rotulo: "Minhas notas", tipo: "textarea" }
+    ],
+    aoSalvar: function (d) {
+      if (d.url) { var l = limpaLink(d.url); if (!l) { toast("Esse link não parece válido. Confira ou deixe em branco."); return false; } d.url = l; }
+      d.fonte = d.url ? infoLink(d.url).fonte : "manual";
+      d.perfil = String(d.perfil || "").trim().replace(/^@/, "") || null;
+      d.tags = String(d.tags || "").split(",").map(function (t) { return t.trim().replace(/^#/, ""); }).filter(function (t, i, a) { return t && a.indexOf(t) === i; });
+      d.status = "pronto"; d.erro = null;
+      if (!r) d.id = novoId();
+      return salva("roteiros", d, r && r.id).then(function (ok) { if (ok) { avisoRot("", ""); carregaRoteirosAba(); } return ok; });
+    },
+    aoApagar: r ? function () { return apaga("roteiros", r.id).then(function (ok) { if (ok) carregaRoteirosAba(); return ok; }); } : null,
+    confirmaApagar: "Apagar este roteiro da biblioteca? Não dá para desfazer."
+  });
+}
+
+/* ---------- transcrever (passo a passo) ---------- */
+var rotOcupado = false;
+async function transcrever(idExistente) {
+  if (rotOcupado) { toast("Já estou transcrevendo um vídeo. Espera ele terminar."); return; }
+  var existente = idExistente ? rot.lista.find(function (x) { return String(x.id) === String(idExistente); }) : null;
+  /* 1. limpa e confere o link */
+  var link = limpaLink(existente ? existente.url : $("#rot-link").value);
+  if (!link) { avisoRot("erro", MSG_LINK); $("#rot-link").focus(); return; }
+  if (!rot.chave) { avisoRot("info", MSG_SEM_CHAVE); $("#rot-config").open = true; $("#rot-chave").focus(); return; }
+  if (!existente) {
+    var ja = rot.lista.find(function (x) { return x.url === link; });
+    if (ja) {
+      if (!confirm("Esse vídeo já está na sua biblioteca" + (ja.titulo ? ' ("' + ja.titulo + '")' : "") + ". Quer transcrever de novo? Vai gastar créditos da Supadata.")) return;
+      existente = ja;
+    }
+  }
+  /* 2. cria (ou reaproveita) a linha como "processando" */
+  var info = infoLink(link);
+  var id = existente ? existente.id : novoId();
+  var dados = { url: link, fonte: info.fonte, status: "processando", erro: null };
+  if (!existente) { dados.id = id; dados.de_quem = $("#rot-dequem").value; dados.perfil = info.perfil || null; }
+  else if (!existente.perfil && info.perfil) dados.perfil = info.perfil;
+  var ok = await grava("roteiros", existente ? banco.from("roteiros").update(dados).eq("id", id) : banco.from("roteiros").insert(dados));
+  if (!ok) { avisoRot("erro", "Não consegui guardar na biblioteca. Veja o aviso no topo da página."); return; }
+  rotOcupado = true; rot.rodando[id] = true;
+  $("#rot-transcrever").disabled = true;
+  if (existente) Object.assign(existente, dados); else rot.lista.unshift(Object.assign({ created_at: new Date().toISOString(), tags: [] }, dados));
+  desenhaBiblioteca();
+  if (!idExistente) $("#rot-link").value = "";
+
+  /* 3. chama a Supadata e mostra o andamento a cada 5 segundos */
+  var inicio = Date.now();
+  function andamento() { avisoRot("info", "⏳ Ouvindo o vídeo... " + Math.round((Date.now() - inicio) / 1000) + "s. Costuma levar de 3 a 4 minutos, pode deixar a aba aberta."); }
+  andamento();
+  var tic = setInterval(andamento, 5000);
+  var res;
+  try { res = await chamaSupadata(link, rot.chave); }
+  finally { clearInterval(tic); rotOcupado = false; delete rot.rodando[id]; var bt = $("#rot-transcrever"); if (bt) bt.disabled = false; }
+
+  var linha = rot.lista.find(function (x) { return String(x.id) === String(id); });
+  if (res.texto) {
+    /* 4. deu texto */
+    var pronto = { transcricao: res.texto, segmentos: res.segmentos, status: "pronto", erro: null };
+    await grava("roteiros", banco.from("roteiros").update(pronto).eq("id", id));
+    if (linha) Object.assign(linha, pronto);
+    desenhaBiblioteca();
+    avisoRot("ok", "✅ Pronto. Revisa, dá um nome e salva.");
+    if (linha) editaRoteiro(linha, null, "✅ Pronto. Revisa, dá um nome e salva.");
+  } else if (res.vazio) {
+    /* 5. não tinha fala */
+    var vazio = { status: "falhou", erro: MSG_VAZIO };
+    await grava("roteiros", banco.from("roteiros").update(vazio).eq("id", id));
+    if (linha) Object.assign(linha, vazio);
+    desenhaBiblioteca();
+    avisoRot("erro", MSG_VAZIO, [["💾 guardar assim mesmo", function () { if (linha) editaRoteiro(linha, null, "Escreva o texto do vídeo na mão e salve."); }]]);
+  } else {
+    /* 6. erro de chave, créditos, rede... */
+    var falhou = { status: "falhou", erro: res.erro.msg };
+    await grava("roteiros", banco.from("roteiros").update(falhou).eq("id", id));
+    if (linha) Object.assign(linha, falhou);
+    desenhaBiblioteca();
+    avisoRot("erro", res.erro.msg);
+    if (res.erro.tipo === "chave") $("#rot-config").open = true;
+  }
+  atualizaSaldo();
+}
+
+/* ---------- estudar com o Claude (só monta o texto, nenhuma chave de IA aqui) ---------- */
+function estudarComClaude() {
+  var outras = rot.lista.filter(function (r) { return r.de_quem !== "minha" && r.transcricao && String(r.transcricao).trim(); }).slice(0, 10);
+  if (!outras.length) { toast("Salve pelo menos um roteiro De outra, com transcrição, pra estudar"); return; }
+  var prompt = [
+    "Você é uma estrategista de conteúdo para creators UGC. Abaixo " + (outras.length === 1 ? "está a transcrição do último vídeo" : "estão as transcrições dos últimos " + outras.length + " vídeos") + " de outras creators que eu salvei como referência.",
+    "",
+    "Sobre mim: sou a Yukie Yahiro, creator UGC em São Paulo. Gravo como alguém que indica para a amiga. Meus nichos: beleza, skincare, moda, casa e decoração, viagem e tech.",
+    "MEU ASSUNTO para os roteiros novos: [escreva aqui o tema, a marca ou o produto]",
+    "",
+    "Quero que você me entregue:",
+    "1. Assuntos em alta: quais temas aparecem mais nesses vídeos e por que estão funcionando.",
+    "2. Expressões que estão prendendo: frases e jeitos de falar que seguram a atenção, principalmente nos primeiros segundos.",
+    "3. Padrões de gancho: agrupe os ganchos por tipo e, para cada tipo, cite um exemplo real tirado das transcrições.",
+    "4. Cinco roteiros novos no MEU assunto, reaproveitando a ESTRUTURA desses vídeos (não o conteúdo). Cada roteiro com gancho, desenvolvimento em blocos de tempo e fechamento.",
+    "",
+    "Regras: português do Brasil, linguagem natural de conversa, do jeito que se fala com uma amiga, nada robotizado e sem travessão.",
+    ""
+  ];
+  outras.forEach(function (r, i) {
+    prompt.push("VÍDEO " + (i + 1) + (r.perfil ? " · @" + String(r.perfil).replace(/^@/, "") : "") + (r.titulo ? " · " + r.titulo : ""));
+    prompt.push(String(r.transcricao).trim());
+    prompt.push("");
+  });
+  var texto = prompt.join("\n");
+  copiaTexto(texto).then(function () { toast("🧠 Prompt copiado ✓ Cole no Claude"); }).catch(function () { toast("Copie o texto da janela"); });
+  abreModal({
+    titulo: "🧠 Estudar com o Claude",
+    sub: "Já copiei o texto abaixo. Abra o Claude, cole e troque o [MEU ASSUNTO] pelo tema que você quer.",
+    largo: true,
+    corpo: '<div class="campo"><label for="rot-prompt">Prompt pronto (' + outras.length + (outras.length === 1 ? " roteiro" : " roteiros") + ')</label><textarea id="rot-prompt" readonly style="min-height:280px">' + esc(texto) + "</textarea></div>" +
+      '<div class="modal-pe"><div class="dir"><button type="button" class="btn" id="rot-copiar-prompt">📋 Copiar de novo</button><a class="btn escuro" href="https://claude.ai/new" target="_blank" rel="noopener">Abrir o Claude ↗</a></div></div>'
+  });
+  $("#rot-copiar-prompt").addEventListener("click", function () { copiaTexto(texto).then(function () { toast("Copiado ✓"); }); });
 }
 </script>
 </body>
