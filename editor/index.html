@@ -27,6 +27,7 @@
   --shadow-sm:0 1px 2px rgba(17,17,17,.04),0 6px 18px -8px rgba(17,17,17,.14);
   --shadow:0 1px 2px rgba(17,17,17,.05),0 18px 40px -16px rgba(17,17,17,.22);
   --wrap:1200px;
+  --barra:36px;             /* altura da barra fixa do topo */
 }
 
 *,*::before,*::after{box-sizing:border-box}
@@ -57,8 +58,13 @@ button,input,textarea{font:inherit;color:inherit}
 .btn-lime{background:var(--lime);color:var(--ink)}
 .btn svg{width:20px;height:20px;flex:none}
 
+/* ============ BARRA FIXA DO TOPO ============ */
+.aviso{position:fixed;top:0;left:0;right:0;z-index:70;height:var(--barra);margin:0;display:flex;align-items:center;justify-content:center;padding:0 12px;background:var(--ink);color:#fff;font-size:clamp(.72rem,2.6vw,.86rem);font-weight:700;letter-spacing:.02em;white-space:nowrap;overflow:hidden}
+.aviso .estrela{color:var(--lime);margin-right:6px}
+@media (max-width:620px){:root{--barra:50px}.aviso{white-space:normal;text-align:center;line-height:1.35;font-size:.78rem;padding:0 16px}}
+
 /* ============ MENU FIXO ============ */
-.topbar{position:fixed;top:12px;left:0;right:0;z-index:60;padding:0 16px}
+.topbar{position:fixed;top:calc(var(--barra) + 10px);left:0;right:0;z-index:60;padding:0 16px}
 .topbar-inner{max-width:var(--wrap);margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;background:rgba(255,255,255,.9);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border:1px solid var(--line);border-radius:18px;padding:8px 8px 8px 16px;box-shadow:var(--shadow-sm);position:relative}
 .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:-.02em;text-decoration:none;white-space:nowrap;font-size:1rem}
 .brand-dot{width:12px;height:12px;border-radius:50%;background:var(--lime);border:2px solid var(--ink);flex:none}
@@ -84,7 +90,7 @@ button,input,textarea{font:inherit;color:inherit}
 }
 
 /* ============ CAPA ============ */
-.hero{padding:128px 0 0;overflow:hidden}
+.hero{padding:calc(128px + var(--barra)) 0 0;overflow:hidden}
 .hero-grid{display:grid;grid-template-columns:1.08fr .92fr;gap:40px;align-items:center}
 .hero-chip{display:inline-flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:7px 14px 7px 10px;font-size:.88rem;font-weight:600;box-shadow:var(--shadow-sm)}
 .rec{width:9px;height:9px;border-radius:50%;background:#e5484d;animation:pisca 1.6s ease-in-out infinite}
@@ -165,7 +171,7 @@ button,input,textarea{font:inherit;color:inherit}
 @keyframes desliza{to{transform:translateX(-50%)}}
 
 @media (max-width:900px){
-  .hero{padding-top:108px}
+  .hero{padding-top:calc(108px + var(--barra))}
   .hero-grid{grid-template-columns:1fr;gap:28px}
   .stage{margin:0 auto;max-width:440px;padding:32px 34px 38px 60px}
   .selecao{top:22px;right:24px;bottom:28px;left:50px}
@@ -185,7 +191,7 @@ button,input,textarea{font:inherit;color:inherit}
 }
 
 /* ============ SEÇÕES ============ */
-section[id]{scroll-margin-top:92px}
+section[id]{scroll-margin-top:calc(92px + var(--barra))}
 .secao{padding:104px 0}
 .sec-head{max-width:720px;margin-bottom:48px}
 .sec-tag{display:inline-flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:5px 12px 5px 5px;font-size:.84rem;font-weight:700;box-shadow:var(--shadow-sm)}
@@ -365,6 +371,9 @@ section[id]{scroll-margin-top:92px}
 </head>
 <body>
 <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+
+<!-- ============ BARRA FIXA DO TOPO: troque o texto aqui ============ -->
+<p class="aviso"><span><span class="estrela" aria-hidden="true">★</span>entrega em até 72h úteis · revisão inclusa · arquivo em alta</span></p>
 
 <!-- ============ MENU FIXO ============ -->
 <header class="topbar">
