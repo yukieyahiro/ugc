@@ -259,6 +259,7 @@ section[id]{scroll-margin-top:calc(92px + var(--barra))}
 .work-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
 .work-meta span{font-size:.76rem;font-weight:700;background:var(--bg);border-radius:7px;padding:3px 8px;color:var(--muted)}
 .work-meta span:first-child{background:var(--lime);color:var(--ink)}
+.galeria-vazia{grid-column:1/-1;color:var(--muted);font-weight:600;background:var(--card);border:1px dashed var(--line);border-radius:20px;padding:28px;text-align:center}
 .galeria-status{margin-top:18px;font-size:.9rem;color:var(--muted);font-weight:600}
 
 /* ============ SERVIÇOS ============ */
@@ -730,6 +731,9 @@ section[id]{scroll-margin-top:calc(92px + var(--barra))}
   </div>
 </div>
 
+<!-- Ligação com o seu Supabase (painel). O endereço e a chave ficam em js/banco.js -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="js/banco.js"></script>
 <script>
 /* =========================================================
    SEUS DADOS: edite só esta parte para trocar os conteúdos.
@@ -783,7 +787,9 @@ const SERVICOS = [
 /* NICHOS dos botões de filtro. O nome aqui precisa ser igual ao "nicho" de cada trabalho. */
 const NICHOS = ["Beleza", "Skincare", "Moda", "Casa e decoração", "Viagem", "Tech"];
 
-/* TRABALHOS da galeria.
+/* TRABALHOS da galeria: LISTA RESERVA.
+   Agora os trabalhos vêm do seu painel (tabela "videos" do Supabase).
+   Esta lista só aparece se o banco não responder, pra página nunca ficar vazia.
    titulo: nome do trabalho | nicho: um dos NICHOS acima | marca | formato
    link: link do vídeo (deixe "" se ainda não tiver)
    capa: caminho da imagem, ex: "capas/skincare-1.jpg" (deixe "" para usar o degradê) */
@@ -865,28 +871,85 @@ const ENVIO_URL = "";
     '<article class="card servico reveal"><span class="servico-n">' + String(i + 1).padStart(2, "0") + "</span><h3>" + esc(s.titulo) + "</h3><p>" + esc(s.texto) + "</p></article>"
   ).join("");
 
-  /* ---------- Galeria com filtro ---------- */
+  /* ---------- Galeria com filtro ----------
+     Os trabalhos vêm da tabela "videos" do painel: só os visíveis, na ordem que você arrastou.
+     Se o banco não responder, usa a lista TRABALHOS lá de cima. */
   const galeria = $("#galeria");
-  galeria.innerHTML = TRABALHOS.map((t) => {
-    const capa = t.capa
-      ? '<img src="' + esc(t.capa) + '" alt="Capa do trabalho ' + esc(t.titulo) + '" loading="lazy">'
-      : '<span class="legenda">capa ' + esc(t.formato.toLowerCase()) + "</span>";
-    const fundo = t.capa ? "" : ' style="background:' + (CORES_NICHO[t.nicho] || "#ddd") + '"';
-    const miolo =
-      '<div class="work-capa"' + fundo + (t.capa ? "" : ' role="img" aria-label="Espaço para a capa do trabalho"') + ">" + capa + "</div>" +
-      '<div class="work-body"><h3>' + esc(t.titulo) + '</h3><div class="work-meta"><span>' + esc(t.nicho) + "</span><span>" + esc(t.marca) + "</span><span>" + esc(t.formato) + "</span></div></div>";
-    const corpo = t.link
-      ? '<a class="work-link" href="' + esc(t.link) + '" target="_blank" rel="noopener">' + miolo + '<span class="sr-only">(abre em nova aba)</span></a>'
-      : miolo;
-    return '<article class="work" data-nicho="' + slug(t.nicho) + '">' + corpo + "</article>";
-  }).join("");
-
   const filtros = $("#filtros");
-  filtros.innerHTML = ['<button type="button" class="chip-filter" data-filtro="todos" aria-pressed="true">Todos</button>']
-    .concat(NICHOS.map((n) => '<button type="button" class="chip-filter" data-filtro="' + slug(n) + '" aria-pressed="false">' + esc(n) + "</button>"))
-    .join("");
-
   const status = $("#galeria-status");
+  let totalTrabalhos = 0;
+  galeria.innerHTML = '<p class="galeria-vazia">Carregando trabalhos...</p>';
+
+  function montaGaleria(lista) {
+    totalTrabalhos = lista.length;
+    if (!lista.length) {
+      galeria.innerHTML = '<p class="galeria-vazia">Novos trabalhos chegando em breve. Enquanto isso, dá uma olhada no meu Instagram @yukieyahiro.</p>';
+      filtros.innerHTML = ""; status.textContent = "";
+      return;
+    }
+    galeria.innerHTML = lista.map((t) => {
+      const formato = t.formato || "vídeo";
+      const capa = t.capa
+        ? '<img src="' + esc(t.capa) + '" alt="Capa do trabalho ' + esc(t.titulo) + '" loading="lazy">'
+        : '<span class="legenda">capa ' + esc(formato.toLowerCase()) + "</span>";
+      const fundo = t.capa ? "" : ' style="background:' + (CORES_NICHO[t.nicho] || "linear-gradient(160deg,#eceee8,#cfd3c9)") + '"';
+      const meta = [t.nicho, t.marca, t.formato].filter(Boolean).map((x) => "<span>" + esc(x) + "</span>").join("");
+      const miolo =
+        '<div class="work-capa"' + fundo + (t.capa ? "" : ' role="img" aria-label="Capa do trabalho ' + esc(t.titulo) + '"') + ">" + capa + "</div>" +
+        '<div class="work-body"><h3>' + esc(t.titulo) + '</h3><div class="work-meta">' + meta + "</div></div>";
+      const corpo = t.link
+        ? '<a class="work-link" href="' + esc(t.link) + '" target="_blank" rel="noopener">' + miolo + '<span class="sr-only">(abre em nova aba)</span></a>'
+        : miolo;
+      return '<article class="work" data-nicho="' + slug(t.nicho || "") + '">' + corpo + "</article>";
+    }).join("");
+
+    /* botões só dos nichos que têm trabalho */
+    const usados = NICHOS.filter((n) => lista.some((t) => t.nicho === n))
+      .concat([...new Set(lista.map((t) => t.nicho).filter((n) => n && !NICHOS.includes(n)))]);
+    filtros.innerHTML = ['<button type="button" class="chip-filter" data-filtro="todos" aria-pressed="true">Todos</button>']
+      .concat(usados.map((n) => '<button type="button" class="chip-filter" data-filtro="' + slug(n) + '" aria-pressed="false">' + esc(n) + "</button>"))
+      .join("");
+    status.textContent = "Mostrando " + totalTrabalhos + (totalTrabalhos === 1 ? " trabalho" : " trabalhos");
+  }
+
+  /* ---------- Destaques: os 3 primeiros vídeos com "destaque" preenchido no painel ----------
+     Se nenhum vídeo tiver destaque, ficam os 3 cards fixos do HTML. */
+  function montaDestaques(lista) {
+    const top = lista.filter((v) => v.destaque && String(v.destaque).trim()).slice(0, 3);
+    if (!top.length) return;
+    const plataforma = (link) => /tiktok/i.test(link || "") ? "TikTok" : /instagram/i.test(link || "") ? "Reels" : /youtu/i.test(link || "") ? "YouTube" : "Vídeo";
+    $(".destaques").innerHTML = top.map((v) => {
+      const m = String(v.destaque).trim().match(/^(\S+)\s*(.*)$/) || [];
+      const num = m[1] || v.destaque, rotulo = m[2] || "";
+      const contexto = [v.marca, v.nicho && v.nicho.toLowerCase(), v.formato].filter(Boolean).join(" · ");
+      const miolo =
+        '<div class="hl-cover"><span class="hl-plataforma">' + plataforma(v.link) + "</span>" +
+        '<span class="hl-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>' +
+        '<span class="legenda escura">capa do vídeo 9:16</span></div>' +
+        '<div class="hl-info"><div class="hl-num">' + esc(num) + "</div>" + (rotulo ? '<span class="hl-rotulo">' + esc(rotulo) + "</span>" : "") +
+        "<h3>" + esc(v.titulo) + "</h3>" + (contexto ? "<p>" + esc(contexto) + "</p>" : "") +
+        (v.link ? '<span class="sr-only">(abre o vídeo em nova aba)</span>' : "") + "</div>";
+      return v.link
+        ? '<a class="hl-card reveal visto" href="' + esc(v.link) + '" target="_blank" rel="noopener">' + miolo + "</a>"
+        : '<div class="hl-card reveal visto">' + miolo + "</div>";
+    }).join("");
+  }
+
+  /* ---------- Busca os vídeos no banco ---------- */
+  (function carregaVideos() {
+    const banco = window.banco;
+    if (!banco) { montaGaleria(TRABALHOS); return; }
+    let chegou = false;
+    const reserva = setTimeout(() => { if (!chegou) montaGaleria(TRABALHOS); }, 6000);
+    banco.from("videos").select("*").eq("visivel", true).order("ordem", { ascending: true })
+      .then(({ data, error }) => {
+        chegou = true; clearTimeout(reserva);
+        if (error || !Array.isArray(data)) { montaGaleria(TRABALHOS); return; }
+        montaGaleria(data);
+        montaDestaques(data);
+      })
+      .catch(() => { chegou = true; clearTimeout(reserva); montaGaleria(TRABALHOS); });
+  })();
   function filtra(chave, nome) {
     let n = 0;
     galeria.querySelectorAll(".work").forEach((el) => {
@@ -903,7 +966,6 @@ const ENVIO_URL = "";
     filtros.querySelectorAll(".chip-filter").forEach((x) => x.setAttribute("aria-pressed", x === b ? "true" : "false"));
     filtra(b.dataset.filtro, b.textContent);
   });
-  status.textContent = "Mostrando " + TRABALHOS.length + " trabalhos";
 
   /* ---------- Menu sanduíche ---------- */
   const burger = $(".burger"), menu = $("#menu");
@@ -994,18 +1056,42 @@ const ENVIO_URL = "";
     try { fetch(ENVIO_URL, { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(dados) }); } catch (e) {}
   }
 
+  /* Guarda o contato na sua base de Marcas (tabela "marcas"), como Lead */
+  function hojeISO() { const d = new Date(); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); }
+  function guardaLead(nome, email, obs) {
+    const banco = window.banco;
+    if (!banco) return Promise.resolve(false);
+    return banco.from("marcas").insert({
+      nome: nome.slice(0, 120), email: email.slice(0, 160), obs: obs.slice(0, 2900),
+      situacao: "lead", ultimo_contato: hojeISO()
+    }).then((r) => !r.error).catch(() => false);
+  }
+  function mostraFalhaEnvio(depoisDe, id) {
+    let p = document.getElementById(id);
+    if (!p) { p = document.createElement("p"); p.id = id; p.className = "erro"; p.setAttribute("role", "alert"); p.style.marginTop = "10px"; depoisDe.insertAdjacentElement("afterend", p); }
+    p.innerHTML = 'Não consegui enviar agora. Tenta de novo ou me chama no <a href="https://wa.me/5543988247380" target="_blank" rel="noopener">WhatsApp</a>.';
+  }
+
   /* ---------- Formulário de contato ---------- */
   const form = $("#form-contato"), formOk = $("#form-ok");
   form.addEventListener("submit", (e) => {
     e.preventDefault();
     const nome = $("#c-nome"), email = $("#c-email"), msg = $("#c-msg");
     if (!valida([[nome, "Me conta seu nome."], [email, "Preciso do seu e-mail para responder."], [msg, "Escreva uma mensagem curtinha."]])) return;
-    envia({ tipo: "contato", nome: nome.value.trim(), email: email.value.trim(), mensagem: msg.value.trim() });
-    $("#form-ok-texto").textContent = "Obrigada pelo contato, " + nome.value.trim().split(" ")[0] + "! Vou te responder o quanto antes no e-mail que você deixou.";
-    form.reset();
-    form.hidden = true;
-    formOk.hidden = false;
-    formOk.focus();
+    const btn = form.querySelector('button[type="submit"]');
+    btn.disabled = true; btn.textContent = "Enviando...";
+    const n = nome.value.trim(), em = email.value.trim(), m = msg.value.trim();
+    envia({ tipo: "contato", nome: n, email: em, mensagem: m });
+    guardaLead(n, em, "Mensagem pelo site: " + m).then((ok) => {
+      btn.disabled = false; btn.textContent = "Enviar mensagem";
+      if (!ok) { mostraFalhaEnvio(btn, "c-envio-erro"); return; }
+      const aviso = document.getElementById("c-envio-erro"); if (aviso) aviso.remove();
+      $("#form-ok-texto").textContent = "Obrigada pelo contato, " + n.split(" ")[0] + "! Vou te responder o quanto antes no e-mail que você deixou.";
+      form.reset();
+      form.hidden = true;
+      formOk.hidden = false;
+      formOk.focus();
+    });
   });
   $("#form-novo").addEventListener("click", () => { formOk.hidden = true; form.hidden = false; $("#c-nome").focus(); });
 
@@ -1046,13 +1132,45 @@ const ENVIO_URL = "";
     e.preventDefault();
     const nome = $("#l-nome"), email = $("#l-email");
     if (!valida([[nome, "Me conta seu nome."], [email, "Preciso do seu e-mail para enviar o mídia kit."]])) return;
+    const btn = $("#lead-form").querySelector('button[type="submit"]');
+    btn.disabled = true;
     envia({ tipo: "midia-kit", nome: nome.value.trim(), email: email.value.trim() });
-    $("#lead-form").hidden = true;
-    const ok = $("#lead-ok");
-    ok.hidden = false;
-    ok.focus();
+    guardaLead(nome.value.trim(), email.value.trim(), "Pediu o mídia kit pelo site.").then((deu) => {
+      btn.disabled = false;
+      if (!deu) { mostraFalhaEnvio(btn, "l-envio-erro"); return; }
+      $("#lead-form").hidden = true;
+      const ok = $("#lead-ok");
+      ok.hidden = false;
+      ok.focus();
+    });
   });
   if (!jaMostrou()) setTimeout(abreLead, 7000);
+
+  /* ---------- Registro simples de visita ----------
+     Grava só a data, a página e de onde a pessoa veio, direto no seu Supabase.
+     Sem serviço de fora e sem pedir nada pro visitante.
+     Conta uma vez por visita (aba aberta) e não conta quando você está logada no painel. */
+  (function registraVisita() {
+    const banco = window.banco;
+    if (!banco) return;
+    const CHAVE_VISITA = "visita_registrada";
+    try { if (sessionStorage.getItem(CHAVE_VISITA) === location.pathname) return; } catch (e) {}
+    const nomes = [[/instagram/, "Instagram"], [/tiktok/, "TikTok"], [/google\./, "Google"], [/facebook|fb\.com|fb\.me/, "Facebook"],
+      [/youtu/, "YouTube"], [/linkedin|lnkd/, "LinkedIn"], [/whatsapp|wa\.me/, "WhatsApp"], [/(^|\.)t\.co$|twitter|(^|\.)x\.com/, "X"],
+      [/pinterest/, "Pinterest"], [/bing\./, "Bing"], [/linktr/, "Linktree"]];
+    const p = new URLSearchParams(location.search);
+    let origem = p.get("utm_source") || p.get("origem") || p.get("ref") || "";
+    if (!origem && document.referrer) {
+      try { const h = new URL(document.referrer).hostname; if (h !== location.hostname) origem = h.replace(/^(www|m|l|lm)\./, ""); } catch (e) {}
+    }
+    const achado = nomes.find((n) => n[0].test(origem.toLowerCase()));
+    origem = achado ? achado[1] : (origem || "direto");
+    banco.auth.getSession().then((r) => {
+      if (r && r.data && r.data.session) return;
+      return banco.from("visitas").insert({ pagina: location.pathname.slice(0, 200), origem: origem.slice(0, 120) })
+        .then((res) => { if (!res.error) { try { sessionStorage.setItem(CHAVE_VISITA, location.pathname); } catch (e) {} } });
+    }).catch(() => {});
+  })();
 
   /* Esc também fecha o menu do celular */
   document.addEventListener("keydown", (e) => { if (e.key === "Escape" && menu.classList.contains("aberto")) { fechaMenu(); burger.focus(); } });
