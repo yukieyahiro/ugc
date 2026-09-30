@@ -3,9 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Yukie Yahiro | Portfólio UGC</title>
-<meta name="description" content="Portfólio UGC de Yukie Yahiro, creator em São Paulo. Vídeos que soam como indicação de amiga para beleza, skincare, moda, casa, viagem e tech.">
+<title>Yukie Yahiro | UGC Creator em São Paulo</title>
+<meta name="description" content="Yukie Yahiro, UGC creator em São Paulo. Vídeos de beleza, skincare, moda, casa e decoração, viagem e tech que soam como indicação de amiga, não como anúncio.">
 <meta name="theme-color" content="#f3f4f2">
+<link rel="canonical" href="https://yukieyahiro.github.io/ugc/">
+<meta property="og:type" content="profile">
+<meta property="og:site_name" content="Yukie Yahiro | UGC Creator">
+<meta property="og:title" content="Yukie Yahiro | UGC Creator em São Paulo">
+<meta property="og:description" content="Vídeos UGC de beleza, skincare, moda, casa e decoração, viagem e tech que soam como indicação de amiga, não como anúncio.">
+<meta property="og:image" content="https://yukieyahiro.github.io/ugc/fotos/yukie-capa.jpg">
+<meta property="og:url" content="https://yukieyahiro.github.io/ugc/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Yukie Yahiro | UGC Creator em São Paulo">
+<meta name="twitter:description" content="Vídeos UGC de beleza, skincare, moda, casa e decoração, viagem e tech que soam como indicação de amiga, não como anúncio.">
+<meta name="twitter:image" content="https://yukieyahiro.github.io/ugc/fotos/yukie-capa.jpg">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23111'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%23c6f24e'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -272,6 +283,24 @@ section[id]{scroll-margin-top:calc(92px + var(--barra))}
 @media (max-width:960px){.servicos{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:600px){.servicos{grid-template-columns:1fr}.servico{padding:22px}}
 
+/* ============ FORMATOS DE CONTEÚDO ============ */
+.formatos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.formato{padding:24px 20px;text-align:center}
+.formato-ico{width:52px;height:52px;margin:0 auto 14px;border-radius:14px;background:var(--lime);display:grid;place-items:center;font-size:1.4rem}
+.formato h3{font-size:1.05rem;font-weight:800;letter-spacing:-.02em}
+.formato p{color:var(--muted);font-size:.9rem;margin-top:6px}
+@media (max-width:860px){.formatos{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.formatos{grid-template-columns:1fr}}
+
+/* ============ EQUIPAMENTOS ============ */
+.equipamentos{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.equipo{padding:10px;text-align:center}
+.equipo-foto{position:relative;aspect-ratio:1/1;border-radius:16px;overflow:hidden;background:linear-gradient(160deg,#e7ecdf,#c4d19f);display:grid;place-items:center}
+.equipo-foto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.equipo h3{font-size:.96rem;font-weight:800;letter-spacing:-.01em;margin-top:12px}
+.equipo p{color:var(--muted);font-size:.82rem;margin-top:2px}
+@media (max-width:860px){.equipamentos{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
 /* ============ NÚMEROS E DEPOIMENTOS ============ */
 .subtitulo{font-size:1.02rem;font-weight:800;letter-spacing:-.01em;margin:56px 0 18px;display:flex;align-items:center;gap:10px}
 .subtitulo::before{content:"";width:22px;height:4px;border-radius:4px;background:var(--lime);border:1px solid var(--lime-deep)}
@@ -389,6 +418,7 @@ section[id]{scroll-margin-top:calc(92px + var(--barra))}
         <li><a href="#destaques">Destaques</a></li>
         <li><a href="#trabalhos">Trabalhos</a></li>
         <li><a href="#servicos">Serviços</a></li>
+        <li><a href="#formatos">Formatos</a></li>
         <li><a href="#numeros">Números</a></li>
         <li><a href="#contato" class="nav-cta">Contato</a></li>
       </ul>
@@ -418,8 +448,8 @@ section[id]{scroll-margin-top:calc(92px + var(--barra))}
         <!-- FOTO DA CAPA: para usar sua foto, coloque dentro da div .photo:
              <img src="fotos/yukie-capa.jpg" alt="Yukie Yahiro sorrindo segurando um produto">
              e apague o span .legenda. Tamanho ideal: 1080 x 1350 (4:5), em JPG ou WebP leve. -->
-        <div class="photo" role="img" aria-label="Espaço para a foto da Yukie Yahiro">
-          <span class="legenda">foto da creator 4:5</span>
+        <div class="photo">
+          <img src="fotos/yukie-capa.jpg" alt="Yukie Yahiro, UGC creator em São Paulo">
         </div>
 
         <!-- Pedaços de interface flutuando (decorativos) -->
@@ -482,8 +512,8 @@ section[id]{scroll-margin-top:calc(92px + var(--barra))}
         <!-- FOTO DO SOBRE: coloque dentro da div .photo:
              <img src="fotos/yukie-bastidores.jpg" alt="Yukie gravando um vídeo em casa" loading="lazy">
              e apague o span .legenda. -->
-        <div class="photo" role="img" aria-label="Espaço para foto de bastidores da Yukie gravando">
-          <span class="legenda">foto de bastidores 4:5</span>
+        <div class="photo">
+          <img src="fotos/yukie-bastidores.jpg" alt="Yukie Yahiro gravando um vídeo UGC" loading="lazy">
         </div>
         <span class="rec-chip" aria-hidden="true"><span class="rec"></span>gravando</span>
       </div>
@@ -524,7 +554,7 @@ section[id]{scroll-margin-top:calc(92px + var(--barra))}
            LINK DO VÍDEO: troque o href abaixo pelo link do seu Reels ou TikTok.
            CAPA: dentro da div .hl-cover, coloque <img src="capas/destaque-1.jpg" alt="Capa do vídeo: descreva a cena"> e apague o span .legenda.
            NÚMERO: troque +0,0M e o rótulo pelo resultado real. -->
-      <a class="hl-card reveal" href="https://www.instagram.com/yukieyahiro/" target="_blank" rel="noopener">
+      <a class="hl-card reveal" href="https://www.instagram.com/yukieyahiro.ugc/" target="_blank" rel="noopener">
         <div class="hl-cover">
           <span class="hl-plataforma">Reels</span>
           <span class="hl-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
@@ -541,7 +571,7 @@ section[id]{scroll-margin-top:calc(92px + var(--barra))}
 
       <!-- ===== DESTAQUE 2 =====
            LINK DO VÍDEO: troque o href. CAPA: coloque a img dentro de .hl-cover. -->
-      <a class="hl-card reveal" href="https://www.instagram.com/yukieyahiro/" target="_blank" rel="noopener">
+      <a class="hl-card reveal" href="https://www.instagram.com/yukieyahiro.ugc/" target="_blank" rel="noopener">
         <div class="hl-cover">
           <span class="hl-plataforma">TikTok</span>
           <span class="hl-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
@@ -558,7 +588,7 @@ section[id]{scroll-margin-top:calc(92px + var(--barra))}
 
       <!-- ===== DESTAQUE 3 =====
            LINK DO VÍDEO: troque o href. CAPA: coloque a img dentro de .hl-cover. -->
-      <a class="hl-card reveal" href="https://www.instagram.com/yukieyahiro/" target="_blank" rel="noopener">
+      <a class="hl-card reveal" href="https://www.instagram.com/yukieyahiro.ugc/" target="_blank" rel="noopener">
         <div class="hl-cover">
           <span class="hl-plataforma">Anúncio</span>
           <span class="hl-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
@@ -604,11 +634,38 @@ section[id]{scroll-margin-top:calc(92px + var(--barra))}
   </div>
 </section>
 
-<!-- ============ 6. NÚMEROS E DEPOIMENTOS ============ -->
+<!-- ============ 6. FORMATOS DE CONTEÚDO ============ -->
+<section class="secao" id="formatos" aria-labelledby="titulo-formatos" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-tag"><b>06</b> Formatos</span>
+      <h2 id="titulo-formatos">Formatos de conteúdo</h2>
+      <p>Alguns dos formatos que eu gravo com mais frequência. Se o seu não estiver na lista, me chama que a gente combina.</p>
+    </div>
+    <!-- Os formatos vêm do array FORMATOS no script -->
+    <div class="formatos" id="formatos-lista"></div>
+  </div>
+</section>
+
+<!-- ============ 7. EQUIPAMENTOS ============ -->
+<section class="secao" id="equipamentos" aria-labelledby="titulo-equipamentos" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-tag"><b>07</b> Equipamentos</span>
+      <h2 id="titulo-equipamentos">Equipamentos</h2>
+      <p>Gravo e edito com equipamento próprio, pensado para entregar vídeo com boa luz, áudio limpo e imagem estável.</p>
+    </div>
+    <!-- Os equipamentos vêm do array EQUIPAMENTOS no script.
+         Para usar fotos reais, coloque o arquivo em fotos/ e preencha "foto" no array, ex: "fotos/equip-iphone.jpg" -->
+    <div class="equipamentos" id="equipamentos-lista"></div>
+  </div>
+</section>
+
+<!-- ============ 8. NÚMEROS E DEPOIMENTOS ============ -->
 <section class="secao" id="numeros" aria-labelledby="titulo-numeros" style="padding-top:0">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="sec-tag"><b>06</b> Números</span>
+      <span class="sec-tag"><b>08</b> Números</span>
       <h2 id="titulo-numeros">Números e depoimentos</h2>
       <p>O que os vídeos entregam e o que as marcas dizem depois.</p>
     </div>
@@ -625,7 +682,7 @@ section[id]{scroll-margin-top:calc(92px + var(--barra))}
 <section class="secao" id="contato" aria-labelledby="titulo-contato" style="padding-top:0">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="sec-tag"><b>07</b> Contato</span>
+      <span class="sec-tag"><b>09</b> Contato</span>
       <h2 id="titulo-contato">Bora criar juntos?</h2>
       <p>Me conta da sua marca e do que você precisa. Eu respondo com uma ideia de roteiro e o orçamento.</p>
     </div>
@@ -639,13 +696,13 @@ section[id]{scroll-margin-top:calc(92px + var(--barra))}
             <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 12a8.5 8.5 0 0 1-12.6 7.4L3 21l1.6-5.2A8.5 8.5 0 1 1 21 12z"/></svg></span>
             <span>WhatsApp<small>(43) 98824-7380</small></span>
           </a>
-          <a class="canal" href="mailto:ayyahiro@gmail.com?subject=Parceria%20UGC">
+          <a class="canal" href="mailto:contato@yukieyahiro.com?subject=Parceria%20UGC">
             <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="M3 7l9 6 9-6"/></svg></span>
-            <span>E-mail<small>ayyahiro@gmail.com</small></span>
+            <span>E-mail<small>contato@yukieyahiro.com</small></span>
           </a>
-          <a class="canal" href="https://www.instagram.com/yukieyahiro/" target="_blank" rel="noopener">
+          <a class="canal" href="https://www.instagram.com/yukieyahiro.ugc/" target="_blank" rel="noopener">
             <span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="currentColor"/></svg></span>
-            <span>Instagram<small>@yukieyahiro</small></span>
+            <span>Instagram<small>@yukieyahiro.ugc</small></span>
           </a>
         </div>
         <p class="cidade"><span aria-hidden="true">📍</span> São Paulo, atendo marcas de todo o Brasil</p>
@@ -691,11 +748,10 @@ section[id]{scroll-margin-top:calc(92px + var(--barra))}
   <div class="wrap rodape-inner">
     <a class="brand" href="#inicio"><span class="brand-dot" aria-hidden="true"></span>Yukie Yahiro</a>
     <nav class="redes" aria-label="Redes sociais">
-      <a href="https://www.instagram.com/yukieyahiro/" target="_blank" rel="noopener">Instagram</a>
-      <!-- TIKTOK: troque @seuusuario pelo seu usuário -->
-      <a href="https://www.tiktok.com/@seuusuario" target="_blank" rel="noopener">TikTok</a>
+      <a href="https://www.instagram.com/yukieyahiro.ugc/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.tiktok.com/@yukieyahiro" target="_blank" rel="noopener">TikTok</a>
       <a href="https://wa.me/5543988247380" target="_blank" rel="noopener">WhatsApp</a>
-      <a href="mailto:ayyahiro@gmail.com">E-mail</a>
+      <a href="mailto:contato@yukieyahiro.com">E-mail</a>
     </nav>
     <p class="copy">© <span id="ano">2026</span> Yukie Yahiro · Creator UGC em São Paulo. Todos os direitos reservados.</p>
   </div>
@@ -780,8 +836,26 @@ const SERVICOS = [
   { titulo: "Corte para anúncio", texto: "Versões do mesmo vídeo com ganchos e durações diferentes, prontas para testar em anúncios pagos no Instagram e no TikTok." },
   { titulo: "Fotos do produto", texto: "Fotos com o produto em uso, em ambiente real, para site, carrossel e anúncio." },
   { titulo: "Unboxing", texto: "A primeira impressão ao abrir a caixa, do lacre ao primeiro uso, com a reação de verdade." },
-  { titulo: "Publicação no meu perfil", texto: "O conteúdo sai também no @yukieyahiro, com legenda pensada e marcação da sua marca." },
+  { titulo: "Publicação no meu perfil", texto: "O conteúdo sai também no @yukieyahiro.ugc, com legenda pensada e marcação da sua marca." },
   { titulo: "Pacote mensal", texto: "Um volume fixo de vídeos por mês, com calendário combinado e prioridade na minha agenda." }
+];
+
+/* FORMATOS DE CONTEÚDO (seção 06). ícone: um emoji simples. */
+const FORMATOS = [
+  { icone: "📦", titulo: "Unboxing", texto: "Do lacre ao primeiro uso, com a reação de verdade." },
+  { icone: "⭐", titulo: "Review", texto: "O que eu achei do produto, pontos fortes e o que se destaca." },
+  { icone: "🎬", titulo: "Tutorial", texto: "Passo a passo de como usar, aplicar ou montar." },
+  { icone: "📈", titulo: "Trend", texto: "Formato ou áudio em alta adaptado para a sua marca." },
+  { icone: "💄", titulo: "GRWM", texto: "Get ready with me com o produto integrado na rotina." },
+  { icone: "💬", titulo: "Depoimento", texto: "Fala direta para a câmera sobre a experiência com a marca." }
+];
+
+/* EQUIPAMENTOS (seção 07). foto: caminho da imagem em fotos/, ou "" para usar o degradê. */
+const EQUIPAMENTOS = [
+  { titulo: "iPhone 15", texto: "Câmera principal dos vídeos", foto: "" },
+  { titulo: "DJI Combo Creator", texto: "Microfone e câmera de apoio", foto: "" },
+  { titulo: "Tripé", texto: "Estabilidade para cada cena", foto: "" },
+  { titulo: "Ringlight", texto: "Luz uniforme em qualquer horário", foto: "" }
 ];
 
 /* NICHOS dos botões de filtro. O nome aqui precisa ser igual ao "nicho" de cada trabalho. */
@@ -871,6 +945,19 @@ const ENVIO_URL = "";
     '<article class="card servico reveal"><span class="servico-n">' + String(i + 1).padStart(2, "0") + "</span><h3>" + esc(s.titulo) + "</h3><p>" + esc(s.texto) + "</p></article>"
   ).join("");
 
+  /* ---------- Formatos de conteúdo ---------- */
+  $("#formatos-lista").innerHTML = FORMATOS.map((f) =>
+    '<article class="card formato reveal"><span class="formato-ico" aria-hidden="true">' + f.icone + "</span><h3>" + esc(f.titulo) + "</h3><p>" + esc(f.texto) + "</p></article>"
+  ).join("");
+
+  /* ---------- Equipamentos ---------- */
+  $("#equipamentos-lista").innerHTML = EQUIPAMENTOS.map((e) => {
+    const foto = e.foto
+      ? '<img src="' + esc(e.foto) + '" alt="' + esc(e.titulo) + '" loading="lazy">'
+      : '<span class="legenda">foto</span>';
+    return '<article class="equipo reveal"><div class="equipo-foto">' + foto + "</div><h3>" + esc(e.titulo) + "</h3><p>" + esc(e.texto) + "</p></article>";
+  }).join("");
+
   /* ---------- Galeria com filtro ----------
      Os trabalhos vêm da tabela "videos" do painel: só os visíveis, na ordem que você arrastou.
      Se o banco não responder, usa a lista TRABALHOS lá de cima. */
@@ -883,7 +970,7 @@ const ENVIO_URL = "";
   function montaGaleria(lista) {
     totalTrabalhos = lista.length;
     if (!lista.length) {
-      galeria.innerHTML = '<p class="galeria-vazia">Novos trabalhos chegando em breve. Enquanto isso, dá uma olhada no meu Instagram @yukieyahiro.</p>';
+      galeria.innerHTML = '<p class="galeria-vazia">Novos trabalhos chegando em breve. Enquanto isso, dá uma olhada no meu Instagram @yukieyahiro.ugc.</p>';
       filtros.innerHTML = ""; status.textContent = "";
       return;
     }
