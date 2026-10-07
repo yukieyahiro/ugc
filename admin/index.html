@@ -1760,17 +1760,17 @@ function desenhaHoje(d) {
   var hoje = hojeISO(), agora = new Date(), h = agora.getHours();
   var saudacao = (h < 12 ? "Bom dia" : h < 18 ? "Boa tarde" : "Boa noite") + ", Yukie!";
   var dataLonga = agora.toLocaleDateString("pt-BR", { weekday: "long", day: "numeric", month: "long" });
-  var tarefasHoje = E.tarefas.filter(function (t) { return !t.feita && t.prazo && String(t.prazo).slice(0, 10) <= hoje; }).sort(ordenaTarefas);
+  var tarefasHoje = E.tarefas.filter(function (t) { return !t.feita && t.prazo && String(t.prazo).slice(0, 10) === hoje; }).sort(ordenaTarefas);
   var prazos = E.campanhas.filter(function (c) { var x = diasAte(c.prazo); return c.prazo && c.status !== "Entregue" && x !== null && x <= 3; })
     .sort(function (a, b) { return String(a.prazo).localeCompare(String(b.prazo)); });
-  var prazosHoje = E.campanhas.filter(function (c) { return c.prazo && String(c.prazo).slice(0, 10) === hoje; });
+  var prazosHoje = E.campanhas.filter(function (c) { return c.prazo && String(c.prazo).slice(0, 10) === hoje && c.status !== "Entregue"; });
   var seteDias = Date.now() - 7 * 864e5;
   var leadsNovos = d.leads.filter(function (m) { return m.criado_em && new Date(m.criado_em).getTime() >= seteDias; });
 
   s.innerHTML = '<div class="saudacao"><h2>' + esc(saudacao) + "</h2><p>" + esc(dataLonga.charAt(0).toUpperCase() + dataLonga.slice(1)) + "</p></div>" +
     '<div class="card faixa" style="--n:5">' +
     "<div><small>Tarefas pra hoje</small><b>" + (E.ok.tarefas ? tarefasHoje.length : "?") + "</b></div>" +
-    "<div><small>Na agenda hoje</small><b>" + (d.okAgenda ? d.agenda.length + prazosHoje.length : "?") + "</b></div>" +
+    "<div><small>Na agenda hoje</small><b>" + (d.okAgenda ? d.agenda.filter(function (c) { return c.status !== "feito"; }).length + prazosHoje.length : "?") + "</b></div>" +
     "<div><small>Prazos em até 3 dias</small><b>" + (E.ok.campanhas ? prazos.length : "?") + "</b></div>" +
     "<div><small>Leads novos (7 dias)</small><b>" + (d.okLeads ? leadsNovos.length : "?") + "</b></div>" +
     "<div><small>Visitas hoje</small><b>" + (d.okVisitas ? d.visitasHoje : "?") + "</b></div></div>" +
@@ -1784,7 +1784,7 @@ function desenhaHoje(d) {
   function tarefas() {
     var alvo = $("#hoje-tarefas"); if (!alvo) return;
     if (!E.ok.tarefas) { alvo.innerHTML = '<p class="vazio">Não consegui ler as tarefas. Veja o aviso no topo.</p>'; return; }
-    var lista = E.tarefas.filter(function (t) { return t.prazo && String(t.prazo).slice(0, 10) <= hoje && (!t.feita || (t.feita_em && isoLocal(new Date(t.feita_em)) === hoje)); }).sort(ordenaTarefas);
+    var lista = E.tarefas.filter(function (t) { return !t.feita && t.prazo && String(t.prazo).slice(0, 10) === hoje; }).sort(ordenaTarefas);
     alvo.innerHTML = lista.length ? '<ul class="lista-tarefas">' + lista.map(linhaTarefa).join("") + "</ul>" : '<p class="vazio">Nenhuma tarefa com prazo pra hoje.</p>';
     if (lista.length) ligaTarefas($("ul", alvo), tarefas);
   }
@@ -1799,10 +1799,10 @@ function desenhaHoje(d) {
   var agendaHtml;
   if (!d.okAgenda) agendaHtml = '<p class="vazio">Não consegui ler o calendário.</p>';
   else {
-    var itens = d.agenda.map(function (c) { return { tipo: c.tipo || "gravar", titulo: semEx(c.titulo), marca: c.marca, feito: c.status === "feito" }; })
-      .concat(prazosHoje.map(function (c) { return { tipo: "prazo", titulo: "Prazo: " + semEx(c.campanha), marca: c.cliente, feito: c.status === "Entregue" }; }));
+    var itens = d.agenda.filter(function (c) { return c.status !== "feito"; }).map(function (c) { return { tipo: c.tipo || "gravar", titulo: semEx(c.titulo), marca: c.marca }; })
+      .concat(prazosHoje.map(function (c) { return { tipo: "prazo", titulo: "Prazo: " + semEx(c.campanha), marca: c.cliente }; }));
     agendaHtml = itens.length ? '<ul class="mini-lista">' + itens.map(function (i) {
-      return '<li><span class="item-cal t-' + esc(i.tipo) + (i.feito ? " feito" : "") + '" style="width:auto;flex:1">' + esc(i.titulo) + (i.marca ? " · " + esc(i.marca) : "") + "</span></li>";
+      return '<li><span class="item-cal t-' + esc(i.tipo) + '" style="width:auto;flex:1">' + esc(i.titulo) + (i.marca ? " · " + esc(i.marca) : "") + "</span></li>";
     }).join("") + "</ul>" : '<p class="vazio">Nada marcado no calendário pra hoje.</p>';
   }
   $("#hoje-agenda").innerHTML = agendaHtml;
