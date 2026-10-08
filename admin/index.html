@@ -520,6 +520,7 @@ input.filtro{padding:0 8px}
 var NICHOS = ["Beleza", "Skincare", "Moda", "Casa e decoração", "Viagem", "Tech"];
 var FORMATOS = ["Vídeo 9:16", "Fotos 4:5", "Corte para anúncio", "Unboxing", "Publicação no perfil"];
 var SITUACOES = [["lead", "Lead", "p-azul"], ["conversando", "Conversando", "p-ambar"], ["cliente", "Cliente", "p-verde"], ["parada", "Parada", "p-cinza"]];
+var NIVEIS_INTERESSE = [["interesse", "Interesse", "p-verde"], ["nichos_diversos", "Nichos diversos", "p-ambar"], ["nao_identificavel", "Não identificável", "p-cinza"]];
 var TIPOS_CAL = [["gravar", "Gravar"], ["editar", "Editar"], ["postar", "Postar"], ["particular", "Particular"]];
 var STATUS = ["Briefing", "Roteiro", "Aprovação Roteiro", "Gravação", "Edição", "Aprovado", "Entregue"];
 var STATUS_COR = { "Briefing": "p-cinza", "Roteiro": "p-lilas", "Aprovação Roteiro": "p-ambar", "Gravação": "p-azul", "Edição": "p-rosa", "Aprovado": "p-verde", "Entregue": "p-lima" };
@@ -980,7 +981,7 @@ function ligaArrasto(tbody) {
 /* =========================================================
    ABA 2: MARCAS
    ========================================================= */
-var filtroMarcas = { texto: "", situacao: "" };
+var filtroMarcas = { texto: "", situacao: "", nivel: "", ordem: "" };
 function carregaMarcas() {
   var s = $("#aba-marcas");
   if (!s.dataset.pronto) {
@@ -989,22 +990,28 @@ function carregaMarcas() {
       '<label class="campo-busca">' + icone("busca") + '<span class="sr-only">Buscar marca</span><input type="search" id="busca-marcas" placeholder="Buscar por nome, @ ou e-mail"></label>' +
       '<label class="sr-only" for="filtro-situacao">Filtrar por situação</label><select class="filtro" id="filtro-situacao"><option value="">Todas as situações</option>' +
       SITUACOES.map(function (x) { return '<option value="' + x[0] + '">' + x[1] + "</option>"; }).join("") + "</select>" +
+      '<label class="sr-only" for="filtro-nivel">Filtrar por nível de interesse</label><select class="filtro" id="filtro-nivel"><option value="">Todos os níveis</option>' +
+      NIVEIS_INTERESSE.map(function (x) { return '<option value="' + x[0] + '">' + x[1] + "</option>"; }).join("") + "</select>" +
+      '<label class="sr-only" for="ordem-marcas">Ordenar</label><select class="filtro" id="ordem-marcas"><option value="">Mais recentes primeiro</option><option value="nivel_interesse">Nível de interesse</option></select>' +
       '<span class="contagem" id="conta-marcas"></span>' +
       '<div class="dir"><button type="button" class="btn" id="csv-marcas">' + icone("baixar") + "Baixar CSV</button>" +
       '<button type="button" class="btn escuro" id="nova-marca">' + icone("mais") + "Adicionar marca</button></div></div>" +
       '<div id="tabela-marcas"><p class="vazio">Carregando...</p></div></div>';
     $("#busca-marcas").addEventListener("input", function () { filtroMarcas.texto = this.value; desenhaMarcas(); });
     $("#filtro-situacao").addEventListener("change", function () { filtroMarcas.situacao = this.value; desenhaMarcas(); });
+    $("#filtro-nivel").addEventListener("change", function () { filtroMarcas.nivel = this.value; desenhaMarcas(); });
+    $("#ordem-marcas").addEventListener("change", function () { filtroMarcas.ordem = this.value; desenhaMarcas(); });
     $("#nova-marca").addEventListener("click", function () { editaMarca(null); });
     $("#csv-marcas").addEventListener("click", baixaMarcas);
   }
   busca("marcas", function (q) { return q.order("criado_em", { ascending: false }); }).then(seguro("marcas", function (r) {
     E.marcas = r.dados; E.ok.marcas = r.ok;
-    confereCampos("marcas", E.marcas, ["nome", "instagram", "email", "telefone", "situacao", "obs", "ultimo_contato"]);
+    confereCampos("marcas", E.marcas, ["nome", "instagram", "email", "telefone", "situacao", "nivel_interesse", "obs", "ultimo_contato"]);
     desenhaMarcas();
   }));
 }
 function situacaoInfo(v) { var x = SITUACOES.find(function (s) { return s[0] === v; }); return x || [v || "", v || "Sem situação", "p-cinza"]; }
+function nivelInteresseInfo(v) { return NIVEIS_INTERESSE.find(function (s) { return s[0] === v; }) || null; }
 function linkZap(tel) {
   var n = String(tel || "").replace(/\D/g, "");
   if (n.length < 10) return "";
@@ -1018,21 +1025,32 @@ function desenhaMarcas() {
   var t = filtroMarcas.texto.trim().toLowerCase().replace(/^@/, "");
   var lista = E.marcas.filter(function (m) {
     if (filtroMarcas.situacao && m.situacao !== filtroMarcas.situacao) return false;
+    if (filtroMarcas.nivel && m.nivel_interesse !== filtroMarcas.nivel) return false;
     if (!t) return true;
     return [m.nome, m.instagram, m.email].some(function (x) { return String(x || "").toLowerCase().replace(/^@/, "").indexOf(t) > -1; });
   });
+  if (filtroMarcas.ordem === "nivel_interesse") {
+    lista = lista.slice().sort(function (a, b) {
+      var ia = NIVEIS_INTERESSE.findIndex(function (n) { return n[0] === a.nivel_interesse; });
+      var ib = NIVEIS_INTERESSE.findIndex(function (n) { return n[0] === b.nivel_interesse; });
+      if (ia < 0) ia = NIVEIS_INTERESSE.length;
+      if (ib < 0) ib = NIVEIS_INTERESSE.length;
+      return ia - ib;
+    });
+  }
   $("#conta-marcas").textContent = lista.length + (lista.length === 1 ? " marca" : " marcas");
   if (!E.marcas.length) { alvo.innerHTML = '<p class="vazio">Sua base está vazia. Quem mandar o formulário do site aparece aqui como Lead.</p>'; return; }
   if (!lista.length) { alvo.innerHTML = '<p class="vazio">Nenhuma marca encontrada com essa busca.</p>'; return; }
-  alvo.innerHTML = '<div class="tabela-rola"><table><thead><tr><th>Marca</th><th>Instagram</th><th>E-mail</th><th>Telefone</th><th>Situação</th><th>Observação</th><th>Último contato</th></tr></thead><tbody>' +
+  alvo.innerHTML = '<div class="tabela-rola"><table><thead><tr><th>Marca</th><th>Instagram</th><th>E-mail</th><th>Telefone</th><th>Situação</th><th>Interesse</th><th>Observação</th><th>Último contato</th></tr></thead><tbody>' +
     lista.map(function (m) {
-      var si = situacaoInfo(m.situacao), zap = linkZap(m.telefone), ig = linkInsta(m.instagram);
+      var si = situacaoInfo(m.situacao), ni = nivelInteresseInfo(m.nivel_interesse), zap = linkZap(m.telefone), ig = linkInsta(m.instagram);
       return '<tr class="clicavel" tabindex="0" data-id="' + esc(m.id) + '">' +
         "<td><b>" + esc(semEx(m.nome)) + "</b>" + tagEx(m.nome) + "</td>" +
         "<td>" + (ig ? '<a class="insta" href="' + ig + '" target="_blank" rel="noopener">@' + esc(String(m.instagram).replace(/^@/, "")) + "</a>" : "") + "</td>" +
         "<td>" + (m.email ? '<a href="mailto:' + esc(m.email) + '">' + esc(m.email) + "</a>" : "") + "</td>" +
         '<td style="white-space:nowrap">' + esc(m.telefone || "") + (zap ? '<a class="zap" href="' + zap + '" target="_blank" rel="noopener" aria-label="Abrir WhatsApp de ' + esc(semEx(m.nome)) + '">' + icone("zap") + "WhatsApp</a>" : "") + "</td>" +
         '<td><span class="pilula ' + si[2] + '">' + esc(si[1]) + "</span></td>" +
+        '<td>' + (ni ? '<span class="pilula ' + ni[2] + '">' + esc(ni[1]) + "</span>" : "") + "</td>" +
         '<td class="trunca" title="' + esc(m.obs || "") + '">' + esc(m.obs || "") + "</td>" +
         "<td>" + fmtData(m.ultimo_contato) + "</td></tr>";
     }).join("") + "</tbody></table></div>";
@@ -1056,10 +1074,11 @@ function editaMarca(m) {
       { nome: "email", rotulo: "E-mail", tipo: "email" },
       { nome: "telefone", rotulo: "Telefone", tipo: "tel", dica: "(11) 99999-9999" },
       { nome: "situacao", rotulo: "Situação", tipo: "select", opcoes: SITUACOES.map(function (s) { return [s[0], s[1]]; }) },
+      { nome: "nivel_interesse", rotulo: "Nível de interesse", tipo: "select", opcoes: [["", "(sem classificação)"]].concat(NIVEIS_INTERESSE.map(function (s) { return [s[0], s[1]]; })) },
       { nome: "ultimo_contato", rotulo: "Último contato", tipo: "date" },
       { nome: "obs", rotulo: "Observação", tipo: "textarea" }
     ],
-    aoSalvar: function (d) { return salva("marcas", d, m && m.id).then(function (ok) { if (ok) carregaMarcas(); return ok; }); },
+    aoSalvar: function (d) { d.nivel_interesse = d.nivel_interesse || null; return salva("marcas", d, m && m.id).then(function (ok) { if (ok) carregaMarcas(); return ok; }); },
     aoApagar: m ? function () { return apaga("marcas", m.id).then(function (ok) { if (ok) carregaMarcas(); return ok; }); } : null,
     confirmaApagar: "Apagar esta marca da sua base? Não dá para desfazer."
   });
@@ -1067,8 +1086,8 @@ function editaMarca(m) {
 function baixaMarcas() {
   if (!E.marcas.length) { toast("Ainda não tem marca para baixar"); return; }
   baixaCSV("marcas-" + hojeISO() + ".csv",
-    ["Marca", "Instagram", "E-mail", "Telefone", "Situação", "Observação", "Último contato", "Entrou em"],
-    E.marcas.map(function (m) { return [m.nome, m.instagram, m.email, m.telefone, situacaoInfo(m.situacao)[1], m.obs, fmtData(m.ultimo_contato), m.criado_em ? fmtData(isoLocal(new Date(m.criado_em))) : ""]; }));
+    ["Marca", "Instagram", "E-mail", "Telefone", "Situação", "Nível de interesse", "Observação", "Último contato", "Entrou em"],
+    E.marcas.map(function (m) { return [m.nome, m.instagram, m.email, m.telefone, situacaoInfo(m.situacao)[1], m.nivel_interesse ? nivelInteresseInfo(m.nivel_interesse)[1] : "", m.obs, fmtData(m.ultimo_contato), m.criado_em ? fmtData(isoLocal(new Date(m.criado_em))) : ""]; }));
 }
 
 /* =========================================================
