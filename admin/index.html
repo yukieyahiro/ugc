@@ -981,7 +981,7 @@ function ligaArrasto(tbody) {
 /* =========================================================
    ABA 2: MARCAS
    ========================================================= */
-var filtroMarcas = { texto: "", situacao: "", nivel: "", ordem: "" };
+var filtroMarcas = { texto: "", situacao: "", nivel: "", ordem: "nivel_interesse" };
 function carregaMarcas() {
   var s = $("#aba-marcas");
   if (!s.dataset.pronto) {
@@ -992,7 +992,7 @@ function carregaMarcas() {
       SITUACOES.map(function (x) { return '<option value="' + x[0] + '">' + x[1] + "</option>"; }).join("") + "</select>" +
       '<label class="sr-only" for="filtro-nivel">Filtrar por nível de interesse</label><select class="filtro" id="filtro-nivel"><option value="">Todos os níveis</option>' +
       NIVEIS_INTERESSE.map(function (x) { return '<option value="' + x[0] + '">' + x[1] + "</option>"; }).join("") + "</select>" +
-      '<label class="sr-only" for="ordem-marcas">Ordenar</label><select class="filtro" id="ordem-marcas"><option value="">Mais recentes primeiro</option><option value="nivel_interesse">Nível de interesse</option></select>' +
+      '<label class="sr-only" for="ordem-marcas">Ordenar</label><select class="filtro" id="ordem-marcas"><option value="nivel_interesse">Nível de interesse</option><option value="">Mais recentes primeiro</option></select>' +
       '<span class="contagem" id="conta-marcas"></span>' +
       '<div class="dir"><button type="button" class="btn" id="csv-marcas">' + icone("baixar") + "Baixar CSV</button>" +
       '<button type="button" class="btn escuro" id="nova-marca">' + icone("mais") + "Adicionar marca</button></div></div>" +
