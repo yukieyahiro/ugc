@@ -435,6 +435,37 @@ input.filtro{padding:0 8px}
 
 /* Aviso rápido no canto */
 .toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:9px 16px;border-radius:999px;font-weight:700;font-size:.84rem;z-index:90;box-shadow:var(--shadow)}
+
+/* ============ 1000+ STORY ============ */
+.mil-hero{padding:24px}
+.mil-eyebrow{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:8px}
+.mil-titulo{font-size:1.5rem;font-weight:800;letter-spacing:-.02em;margin-bottom:10px;max-width:640px}
+.mil-sub{color:var(--muted);font-size:.9rem;max-width:620px;margin-bottom:14px}
+.mil-legenda{color:var(--muted);font-size:.86rem;margin-bottom:14px}
+.mil-rotas{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.mil-rota{padding:16px}
+.mil-rota h3{font-size:.95rem;font-weight:800;margin:8px 0 6px}
+.mil-rota p{font-size:.84rem;color:var(--muted)}
+.mil-passos{list-style:none;counter-reset:mil-passo;display:grid;gap:8px;margin:12px 0}
+.mil-passos li{counter-increment:mil-passo;position:relative;padding:8px 10px 8px 38px;background:var(--bg);border-radius:var(--radius-xs);font-size:.86rem}
+.mil-passos li::before{content:counter(mil-passo);position:absolute;left:8px;top:8px;width:20px;height:20px;border-radius:50%;background:var(--ink);color:#fff;font-size:.72rem;font-weight:800;display:grid;place-items:center}
+.mil-acao{margin-top:12px;background:var(--lime-soft);border-radius:var(--radius-sm);padding:10px 12px}
+.mil-acao b{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:#3b5200;margin-bottom:2px}
+.mil-acao p{font-size:.86rem;font-weight:700}
+.mil-bonus{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.mil-bonus-card{padding:16px}
+.mil-bonus-card h3{font-size:.9rem;font-weight:800;margin:8px 0 6px}
+.mil-bonus-card p{font-size:.84rem;color:var(--muted)}
+.mil-calc{display:grid;grid-template-columns:repeat(3,1fr) 1.4fr;gap:12px;align-items:end;margin-bottom:16px}
+@media (max-width:760px){.mil-calc{grid-template-columns:1fr 1fr}}
+.mil-calc-resultado{background:var(--bg);border-radius:var(--radius-sm);padding:10px 12px;display:flex;flex-direction:column;gap:2px;justify-content:center}
+.mil-calc-resultado small{color:var(--muted);font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.mil-calc-resultado b{font-size:1.1rem;font-weight:800}
+.mil-calc-resultado em{font-style:normal;font-size:.82rem;color:var(--muted)}
+.mil-plano7{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.mil-dia{background:var(--bg);border-radius:var(--radius-sm);padding:12px}
+.mil-dia b{display:block;font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:4px}
+.mil-dia p{font-size:.84rem}
 </style>
 </head>
 <body class="travado">
@@ -459,6 +490,8 @@ input.filtro{padding:0 8px}
       <a href="#roteiros" data-aba="roteiros"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h8l4 4v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z"/><path d="M15 3v4h4M9 12h6M9 16h6"/></svg>Roteiros</a>
       <a href="#radar" data-aba="radar"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 12l6-6"/></svg>Radar de novidades</a>
       <a href="#links" data-aba="links"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>Links úteis</a>
+      <p class="grupo">guias</p>
+      <a href="#mil" data-aba="mil"><svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg>1000+ Story</a>
     </nav>
     <div class="menu-pe">
       <small>Logada como</small>
@@ -491,6 +524,7 @@ input.filtro{padding:0 8px}
     <section id="aba-radar" class="aba" hidden></section>
     <section id="aba-links" class="aba" hidden></section>
     <section id="aba-roteiros" class="aba" hidden></section>
+    <section id="aba-mil" class="aba" hidden></section>
   </main>
 </div>
 
@@ -547,7 +581,8 @@ var ABAS = {
   ideias: { titulo: "Ideias", sub: "Da ideia até o post", carregar: carregaIdeias },
   radar: { titulo: "Radar de novidades", sub: "Tendências, áudios, novidades das plataformas e oportunidades", carregar: carregaRadar },
   links: { titulo: "Links úteis", sub: "Os sites que você usa no trabalho", carregar: carregaLinks },
-  roteiros: { titulo: "📜 Roteiros", sub: "Cole o link de um reel e eu transcrevo. Serve pros seus e pros das outras, com etiqueta pra você separar.", carregar: carregaRoteirosAba }
+  roteiros: { titulo: "📜 Roteiros", sub: "Cole o link de um reel e eu transcrevo. Serve pros seus e pros das outras, com etiqueta pra você separar.", carregar: carregaRoteirosAba },
+  mil: { titulo: "1000+ Story", sub: "Guia de execução: o primeiro R$ 1.000 começa com um link", carregar: carregaMil }
 };
 
 /* ---------- utilidades ---------- */
@@ -2492,6 +2527,205 @@ function estudarComClaude() {
       '<div class="modal-pe"><div class="dir"><button type="button" class="btn" id="rot-copiar-prompt">📋 Copiar de novo</button><a class="btn escuro" href="https://claude.ai/new" target="_blank" rel="noopener">Abrir o Claude ↗</a></div></div>'
   });
   $("#rot-copiar-prompt").addEventListener("click", function () { copiaTexto(texto).then(function () { toast("Copiado ✓"); }); });
+}
+
+/* =========================================================
+   ABA NOVA: 1000+ STORY (guia de execução, conteúdo fixo)
+   ========================================================= */
+var ROTAS_MIL = [
+  ["AFILIADO", "Indique produtos", "Escolha produtos que você realmente usaria, gere um link rastreável e receba comissão em compras elegíveis."],
+  ["SERVIÇO", "Venda uma habilidade", "Transforme uma habilidade em uma entrega pequena, com escopo, prazo e preço claros."],
+  ["DIGITAL", "Crie um material", "Empacote uma solução em checklist, template, aula curta ou mini-guia."]
+];
+var GUIAS_MIL = [
+  { rota: "ROTA 01 · SHOPEE", acao: "Cadastrar", titulo: "Do cadastro ao primeiro link", prepare: "conta Shopee, rede social ativa e uma categoria que você conhece.",
+    passos: ["Abra o Programa de Criadores e Afiliados Shopee.", "Envie seu cadastro e aguarde a análise.", "Escolha uma microcuradoria de 5 produtos.", "Gere o link personalizado no painel oficial.", "Publique contexto, produto, aviso de publicidade e convite.", "Registre visualizações, cliques, pedidos e comissão validada."],
+    primeiraAcao: "Escolha 5 produtos para uma situação específica, como mesa de home office." },
+  { rota: "ROTA 02 · HOTMART", acao: "Criar conta", titulo: "Venda sem criar produto", prepare: "um tema que sua audiência já pergunta e disposição para avaliar a oferta.",
+    passos: ["Crie ou acesse sua conta.", "Abra o Marketplace e escolha um problema específico.", "Leia página de vendas, reembolso e materiais permitidos.", "Solicite afiliação e copie seu link pelo painel.", "Ensine um microresultado nos Stories.", "Acompanhe cliques, vendas e reembolsos."],
+    primeiraAcao: "Escreva para quem o produto é e para quem não é." },
+  { rota: "ROTA 03 · SERVIÇO", acao: "Criar perfil", titulo: "Transforme habilidade em proposta", prepare: "uma entrega fechada, como 5 Stories em 48h ou revisão de bio.",
+    passos: ["Crie um perfil com habilidade específica.", "Adicione amostras autorais de portfólio.", "Pesquise projetos compatíveis.", "Envie proposta com entrega, prazo e preço.", "Converse na plataforma antes de começar.", "Mostre o processo sem expor dados de clientes."],
+    primeiraAcao: "Monte uma oferta: “5 Stories prontos em 48h”." },
+  { rota: "ROTA 04 · DIGITAL", acao: "Conhecer", titulo: "Crie seu primeiro material", prepare: "uma transformação pequena que você consiga entregar com clareza.",
+    passos: ["Escolha uma pergunta que você sabe responder.", "Crie 5 a 15 páginas ou um template.", "Mostre o índice nos Stories.", "Colete respostas e ajuste a entrega.", "Hospede e venda por checkout oficial.", "Registre visitas, vendas e reembolsos."],
+    primeiraAcao: "Faça uma enquete com duas dores e use a mais votada." }
+];
+var BONUS_MIL = [
+  ["Checklist", "Oferta escolhida; benefício em uma frase; link testado; aviso de publicidade; CTA e registro das métricas."],
+  ["Planilha mínima", "Data | rota | produto | preço | comissão | Stories | visualizações | cliques | pedidos | comissão validada."],
+  ["Plano de 7 dias", "Escolher, preparar, publicar contexto, comparar, conversar, revisar métricas e repetir melhorando."],
+  ["Script de direct", "Você busca qual resultado, faixa de preço e critério? Se for link de afiliado, eu aviso antes."],
+  ["Ideias de Stories", "Comparação, erro comum, bastidor, enquete, dúvidas, demonstração, para quem é e para quem não é."],
+  ["Proposta freelancer", "Entendi que você precisa de [entrega]. Posso entregar [escopo] em [prazo], por [valor]."]
+];
+var STORIES_MIL = [
+  { t: "Story 1 · Contexto e problema", obj: "Fazer a pessoa se reconhecer antes de ver o produto.",
+    frase: "Eu estava tentando [situação] e percebi que o que mais me atrapalhava era [problema].",
+    dica: "Use uma cena real, uma pergunta ou uma enquete. Não comece com o link." },
+  { t: "Story 2 · Critério de escolha", obj: "Mostrar por que essa opção entre várias, para não parecer aleatório.",
+    frase: "Eu testei/pesquisei algumas opções e fiquei com esta por [critério: preço, prazo, praticidade ou resultado].",
+    dica: "Cite um critério concreto. Evita parecer indicação qualquer." },
+  { t: "Story 3 · Demonstração honesta", obj: "Mostrar o uso ou o resultado sem prometer demais.",
+    frase: "Na prática, funcionou assim: [o que resolveu bem] e [o que não resolve].",
+    dica: "Inclua pelo menos um ponto de atenção, não só elogio." },
+  { t: "Story 4 · Transparência + convite", obj: "Avisar o link/parceria com clareza e abrir espaço para conversa.",
+    frase: "Esse é um link de afiliado/parceria — se comprar por ele, eu recebo uma comissão. Manda um direct se quiser saber mais.",
+    dica: "Coloque o aviso de publicidade perto da recomendação, nunca escondido." }
+];
+var CHECKLIST_MIL = [
+  "Escolhi uma rota e uma oferta específica.",
+  "Li as regras da plataforma e confirmei o cadastro.",
+  "Testei o link antes de publicar.",
+  "Preparei contexto, critério, demonstração e CTA.",
+  "Identifiquei publicidade ou link de afiliado.",
+  "Registrei visualizações, respostas, cliques e pedidos.",
+  "Defini o que vou repetir ou melhorar amanhã."
+];
+var CALC_MIL = [[50, 8, 4, 250], [100, 8, 8, 125], [200, 8, 16, 63], [100, 12, 12, 84]];
+var PLANO7_MIL = [
+  ["DIA 1", "Escolha rota, público, problema e oferta."],
+  ["DIA 2", "Cadastre-se, monte portfólio ou rascunhe o material."],
+  ["DIA 3", "Publique contexto e uma pergunta para entender a demanda."],
+  ["DIA 4", "Publique comparação, demonstração ou amostra."],
+  ["DIA 5", "Responda directs e envie a oferta com transparência."],
+  ["DIA 6", "Leia cliques, respostas, propostas e objeções."],
+  ["DIA 7", "Repita o melhor ângulo com uma melhoria concreta."]
+];
+
+function carregaMil() {
+  var s = $("#aba-mil");
+  if (!s.dataset.pronto) {
+    s.dataset.pronto = "1";
+    s.innerHTML = montaMil();
+    ligaMil();
+  }
+  busca("marcados", function (q) { return q.like("chave", "mil:%"); }).then(seguro("mil", function (r) {
+    E.ok.marcadosMil = r.ok;
+    E.marcadosMil = new Set(r.dados.map(function (m) { return m.chave; }));
+    desenhaChecklistMil();
+  }));
+}
+function montaMil() {
+  return (
+    '<div class="card bloco mil-hero">' +
+      '<p class="mil-eyebrow">Guia de execução</p>' +
+      '<h2 class="mil-titulo">O primeiro R$ 1.000 começa com um link.</h2>' +
+      '<p class="mil-sub">Escolha uma rota, publique uma sequência simples e acompanhe os números. Sem promessa mágica: com passos claros para começar hoje.</p>' +
+      '<span class="pilula p-verde">Comece pequeno: 1 produto · 1 Story · 1 conversa</span>' +
+      '<div class="faixa" style="--n:3;margin-top:16px">' +
+        '<div><small>Meta</small><b>R$ 1.000</b><em>planejamento, não garantia</em></div>' +
+        '<div><small>Você controla</small><b>ação</b><em>escolha e frequência</em></div>' +
+        '<div><small>O que varia</small><b>resultado</b><em>cliques e conversão</em></div>' +
+      "</div></div>" +
+
+    '<div class="card bloco">' +
+      '<div class="bloco-topo"><h2>01 · Escolha uma rota</h2></div>' +
+      '<p class="mil-legenda">Uma primeira oferta é melhor do que um negócio inteiro.</p>' +
+      '<div class="mil-rotas">' + ROTAS_MIL.map(function (r) {
+        return '<div class="card mil-rota"><span class="pilula p-cinza">' + esc(r[0]) + "</span><h3>" + esc(r[1]) + "</h3><p>" + esc(r[2]) + "</p></div>";
+      }).join("") + "</div></div>" +
+
+    '<div class="card bloco">' +
+      '<div class="bloco-topo"><h2>02 · Guias operacionais</h2></div>' +
+      '<p class="mil-legenda">Onde se cadastrar e o que fazer depois.</p>' +
+      GUIAS_MIL.map(function (g, i) {
+        return '<details class="card sec"' + (i === 0 ? " open" : "") + "><summary><span class=\"emo\" aria-hidden=\"true\">🧭</span>" +
+          "<h3>" + esc(g.rota) + "</h3><p>" + esc(g.titulo) + "</p>" +
+          '<span class="conta"><span class="pilula p-azul">' + esc(g.acao) + "</span></span></summary>" +
+          '<div class="sec-corpo">' +
+            '<div class="porque"><b>Prepare</b>' + esc(g.prepare) + "</div>" +
+            '<ol class="mil-passos">' + g.passos.map(function (p) { return "<li>" + esc(p) + "</li>"; }).join("") + "</ol>" +
+            '<div class="mil-acao"><b>Primeira ação</b><p>' + esc(g.primeiraAcao) + "</p></div>" +
+          "</div></details>";
+      }).join("") +
+      '<p class="aviso" style="margin-top:12px">IMPORTANTE: aprovação, taxas, comissões, prazos e regras podem mudar. Confirme os termos atuais dentro da sua conta antes de divulgar.</p>' +
+    "</div>" +
+
+    '<div class="card bloco">' +
+      '<div class="bloco-topo"><h2>03 · Bônus de execução</h2></div>' +
+      '<p class="mil-legenda">Materiais para não travar depois da leitura.</p>' +
+      '<div class="mil-bonus">' + BONUS_MIL.map(function (b, i) {
+        return '<div class="card mil-bonus-card"><span class="pilula p-lilas">Bônus 0' + (i + 1) + "</span><h3>" + esc(b[0]) + "</h3><p>" + esc(b[1]) + "</p></div>";
+      }).join("") + "</div></div>" +
+
+    '<div class="card bloco">' +
+      '<div class="bloco-topo"><h2>04 · Stories que vendem sem forçar</h2></div>' +
+      '<p class="mil-legenda">Use uma sequência, não uma postagem solta. Abra cada etapa para estudar o objetivo e adaptar o roteiro. O aviso de publicidade precisa aparecer perto da recomendação.</p>' +
+      STORIES_MIL.map(function (st, i) {
+        return '<details class="card sec"' + (i === 0 ? " open" : "") + '><summary><span class="emo" aria-hidden="true">📱</span><h3>' + esc(st.t) + "</h3><p>" + esc(st.obj) + "</p></summary>" +
+          '<div class="sec-corpo"><div class="gancho">' + esc(st.frase) + '</div><div class="porque" style="margin-top:10px"><b>Como adaptar</b>' + esc(st.dica) + "</div></div></details>";
+      }).join("") +
+    "</div>" +
+
+    '<div class="card bloco">' +
+      '<div class="bloco-topo"><h2>05 · Checklist guiado</h2></div>' +
+      '<p class="mil-legenda">Marque o que você já fez. A marcação fica salva neste painel.</p>' +
+      '<div id="mil-checklist"><p class="vazio">Carregando...</p></div>' +
+    "</div>" +
+
+    '<div class="card bloco">' +
+      '<div class="bloco-topo"><h2>06 · Calculadora de planejamento</h2></div>' +
+      '<p class="mil-legenda">Quanto precisa acontecer?</p>' +
+      '<div class="mil-calc">' +
+        '<div class="campo"><label for="mil-preco">Preço médio (R$)</label><input type="number" id="mil-preco" min="0" step="0.01" value="100"></div>' +
+        '<div class="campo"><label for="mil-comissao">Comissão (%)</label><input type="number" id="mil-comissao" min="0" step="0.1" value="8"></div>' +
+        '<div class="campo"><label for="mil-meta">Meta (R$)</label><input type="number" id="mil-meta" min="0" step="1" value="1000"></div>' +
+        '<div class="mil-calc-resultado" id="mil-resultado"></div>' +
+      "</div>" +
+      '<div class="tabela-rola"><table><thead><tr><th>Preço</th><th>Comissão</th><th class="num">Comissão por venda</th><th class="num">Vendas para R$ 1.000</th></tr></thead><tbody>' +
+        CALC_MIL.map(function (l) {
+          return "<tr><td>" + moeda(l[0]) + "</td><td>" + l[1] + '%</td><td class="num">' + moeda(l[2]) + '</td><td class="num">' + l[3] + "</td></tr>";
+        }).join("") +
+      "</tbody></table></div>" +
+      '<p class="mil-legenda" style="margin-top:10px">Fórmula: vendas necessárias = meta ÷ (preço médio × comissão). Isso é uma simulação; cliques, conversão, cancelamentos e elegibilidade alteram o resultado.</p>' +
+    "</div>" +
+
+    '<div class="card bloco">' +
+      '<div class="bloco-topo"><h2>07 · Plano de 7 dias</h2></div>' +
+      '<p class="mil-legenda">Uma semana para testar sem se perder.</p>' +
+      '<div class="mil-plano7">' + PLANO7_MIL.map(function (d) {
+        return '<div class="mil-dia"><b>' + esc(d[0]) + "</b><p>" + esc(d[1]) + "</p></div>";
+      }).join("") + "</div></div>"
+  );
+}
+function ligaMil() {
+  function recalc() {
+    var preco = numero($("#mil-preco").value), pct = numero($("#mil-comissao").value), meta = numero($("#mil-meta").value);
+    var porVenda = preco * (pct / 100);
+    var el = $("#mil-resultado");
+    if (!porVenda) { el.innerHTML = '<p class="vazio" style="padding:0;background:none;text-align:left">Informe um preço e uma comissão maiores que zero.</p>'; return; }
+    var vendas = Math.ceil(meta / porVenda);
+    el.innerHTML = "<small>Comissão por venda</small><b>" + moeda(porVenda) + "</b><em>vendas para " + moeda(meta) + ": <b>" + vendas + "</b></em>";
+  }
+  ["mil-preco", "mil-comissao", "mil-meta"].forEach(function (id) { $("#" + id).addEventListener("input", recalc); });
+  recalc();
+}
+function desenhaChecklistMil() {
+  var alvo = $("#mil-checklist"); if (!alvo) return;
+  alvo.innerHTML = (E.ok.marcadosMil ? "" : '<p class="aviso" style="margin-bottom:12px">Não consegui ler o que você já marcou. Dá para marcar, mas pode não salvar até o banco voltar.</p>') +
+    '<div class="card geral"><b id="mil-ck-geral-t"></b><div class="progresso"><i id="mil-ck-geral"></i></div></div>' +
+    CHECKLIST_MIL.map(function (t, i) {
+      var chave = "mil:" + i;
+      return '<label class="item-ck"><input type="checkbox" data-chave="' + esc(chave) + '"' + (E.marcadosMil.has(chave) ? " checked" : "") + "><span><b>" + esc(t) + "</b></span></label>";
+    }).join("");
+  atualizaProgressoMil();
+  alvo.onchange = function (e) {
+    var cb = e.target.closest("input[data-chave]"); if (!cb) return;
+    var chave = cb.dataset.chave, marcou = cb.checked;
+    if (marcou) E.marcadosMil.add(chave); else E.marcadosMil.delete(chave);
+    atualizaProgressoMil();
+    var q = marcou ? banco.from("marcados").upsert({ chave: chave, marcado: true, atualizado_em: new Date().toISOString() }) : banco.from("marcados").delete().eq("chave", chave);
+    grava("marcados", q).then(function (ok) {
+      if (!ok) { cb.checked = !marcou; if (marcou) E.marcadosMil.delete(chave); else E.marcadosMil.add(chave); atualizaProgressoMil(); }
+    });
+  };
+}
+function atualizaProgressoMil() {
+  var cbs = $$("#mil-checklist input[data-chave]"), f = cbs.filter(function (c) { return c.checked; }).length;
+  var pct = cbs.length ? Math.round(f / cbs.length * 100) : 0;
+  $("#mil-ck-geral-t").textContent = "Pronto no geral: " + f + " de " + cbs.length + " (" + pct + "%)";
+  $("#mil-ck-geral").style.width = pct + "%";
 }
 </script>
 </body>
